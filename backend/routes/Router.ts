@@ -1,6 +1,8 @@
-import { Router, Request, Response } from "express";
+import { Request, Response } from "express";
+import express from "express";
+const router = express();
 
-const router = Router();
+router.use("/api/users", require("./UserRoutes.ts"));
 
 router.get("/", (req: Request, res: Response) => {
   res.send("API Working!");
