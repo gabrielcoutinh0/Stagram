@@ -1,19 +1,27 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+import { Schema, model } from "mongoose";
 
-const userSchema = new Schema(
+interface IUser {
+  name: string;
+  userName: string;
+  email: string;
+  password: string;
+  profileImage?: string;
+  bio?: string;
+}
+
+const userSchema = new Schema<IUser>(
   {
-    name: String,
-    userName: String,
-    email: String,
-    password: String,
-    profileImage: String,
-    bio: String,
+    name: { type: String, requerid: true },
+    userName: { type: String, requerid: true },
+    email: { type: String, requerid: true },
+    password: { type: String, requerid: true },
+    profileImage: { type: String, requerid: false },
+    bio: { type: String, requerid: false },
   },
   {
     timestamps: true,
   }
 );
 
-const User = mongoose.model("User", userSchema);
+const User = model<IUser>("User", userSchema);
 module.exports = User;
