@@ -1,8 +1,10 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
+import * as dotenv from "dotenv";
+const router = require("./routes/Router");
 
-require("dotenv").config();
+dotenv.config();
 
 const port = process.env.PORT;
 const origin = process.env.FRONTEND_PORT;
@@ -17,7 +19,6 @@ app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 require("./config/db.ts");
 
-const router = require("./routes/Router.ts");
 app.use(router);
 
 app.listen(port, () => console.log(`server running on port ${port}...`));

@@ -1,24 +1,7 @@
-import { Request } from "express";
-import { CustomValidator } from "express-validator";
+//import { CustomValidator } from "express-validator";
 const { body } = require("express-validator");
 
 export const userCreateValidation = () => {
-  type RequestBody<T> = Request<{}, {}, T>;
-  interface IUserBody {
-    name: string;
-    userName: string;
-    email: string;
-    password: string;
-    passwordConfirmation: string;
-  }
-  // const isValidEmail: CustomValidator = (value) => {
-  //   return User.findUserByEmail(value).then((user: string) => {
-  //     if (user) {
-  //       return Promise.reject("E-mail já cadastrado.");
-  //     }
-  //   });
-  // };
-
   return [
     body("name")
       .isString()

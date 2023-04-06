@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import express from "express";
-const router = express();
+const express = require("express");
+export const router = express();
 
 router.use("/api/users", require("./UserRoutes"));
 
