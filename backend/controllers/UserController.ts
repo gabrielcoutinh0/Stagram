@@ -45,4 +45,26 @@ const register = async (req: Request, res: Response) => {
   });
 };
 
-module.exports = { register };
+const login = async (req: Request, res: Response) => {
+  const { username, password } = req.body;
+
+  const user = await User.findOne({ username });
+
+  if (!user) {
+    res.status(404).json({ errors: ["Usuário não encontrado."] });
+    return;
+  }
+
+  if (!(await bcrypt.compare(password, user.password))) {
+    res.status(422).json({ errors: ["Senha inválida."] });
+    return;
+  }
+
+  res.status(201).json({
+    _id: user._id,
+    profileImage: user.profileImage,
+    token: generateToken(user._id),
+  });
+};
+
+module.exports = { register, login };
