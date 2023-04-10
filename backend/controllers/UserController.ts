@@ -67,4 +67,9 @@ const login = async (req: Request, res: Response) => {
   });
 };
 
-module.exports = { register, login };
+const getCurrentUser = async (req: Request, res: Response) => {
+  const user = req.user;
+  res.status(200).json(user);
+};
+
+module.exports = { register, login, getCurrentUser };
