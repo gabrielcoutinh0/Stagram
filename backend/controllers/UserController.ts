@@ -102,4 +102,17 @@ const update = async (req: Request, res: Response) => {
   res.status(200).json(user);
 };
 
-module.exports = { register, login, getCurrentUser, update };
+const getUserById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findOne({ username: id }).select("-password");
+
+    if (user !== null) res.status(200).json(user);
+    else throw new Error("Usuário não encontrado.");
+  } catch (error) {
+    res.status(404).json({ errors: ["Usuário não encontrado."] });
+  }
+};
+
+module.exports = { register, login, getCurrentUser, update, getUserById };
