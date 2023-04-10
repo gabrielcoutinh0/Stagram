@@ -19,14 +19,9 @@
     "strictNullChecks": true,
 
     "noImplicitReturns": false,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "typeRoots": ["@types", "./node_modules/@types"]
   },
   "include": ["./**/*.ts"],
-  "exclude": ["node_modules/**/*"],
-  "typeRoots": [
-    "./@types",
-    "./custom_typings",
-    "./@types",
-    "./node_modules/@types"
-  ]
+  "exclude": ["node_modules/**/*"]
 }
