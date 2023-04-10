@@ -18,9 +18,15 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
 
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noUncheckedIndexedAccess": true
   },
   "include": ["./**/*.ts"],
-  "exclude": ["node_modules/**/*"]
+  "exclude": ["node_modules/**/*"],
+  "typeRoots": [
+    "./@types",
+    "./custom_typings",
+    "./@types",
+    "./node_modules/@types"
+  ]
 }
