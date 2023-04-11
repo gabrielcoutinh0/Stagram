@@ -55,4 +55,14 @@ const getAllPhotos = async (req: Request, res: Response) => {
   return res.status(200).json(photos);
 };
 
-module.exports = { insertPhoto, deletePhoto, getAllPhotos };
+const getUserPhotos = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const photos = await Photo.find({ username: id })
+    .sort([["createdAt", -1]])
+    .exec();
+
+  return res.status(200).json(photos);
+};
+
+module.exports = { insertPhoto, deletePhoto, getAllPhotos, getUserPhotos };
