@@ -15,7 +15,14 @@ const photoSchema = new Schema<IPhoto>(
     image: { type: String, requerid: true },
     title: { type: String, requerid: true },
     likes: [{ type: String, requerid: false }],
-    comments: [{ type: String, requerid: false }],
+    comments: [
+      {
+        comment: { type: String },
+        userName: { type: String },
+        userImage: { type: String },
+        userId: { type: Types.ObjectId },
+      },
+    ],
     username: { type: String, required: true },
   },
   {
