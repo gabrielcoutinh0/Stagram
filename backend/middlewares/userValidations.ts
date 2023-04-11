@@ -1,4 +1,4 @@
-//import { CustomValidator } from "express-validator";
+import { CustomValidator } from "express-validator";
 const { body } = require("express-validator");
 
 export const userCreateValidation = () => {
@@ -31,7 +31,7 @@ export const userCreateValidation = () => {
       .isString()
       .withMessage("A confirmação de senha é obrigatória.")
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .custom((value: string, { req }: any) => {
+      .custom((value: CustomValidator, { req }: any) => {
         if (value != req.body.password) {
           throw new Error("As senhas não são iguais.");
         }
