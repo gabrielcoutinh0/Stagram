@@ -93,6 +93,34 @@ const updatePhoto = async (req: Request, res: Response) => {
   }
 };
 
+const likePhoto = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  let like: boolean;
+  try {
+    const reqUser = req.user;
+    const photo = await Photo.findById(id);
+    const ArrayLikes = photo.likes;
+
+    if (ArrayLikes.includes(reqUser._id)) {
+      ArrayLikes.pull(reqUser._id);
+      like = false;
+    } else {
+      ArrayLikes.push(reqUser._id);
+      like = true;
+    }
+
+    photo.save();
+
+    res.status(200).json({
+      photoId: id,
+      userId: reqUser._id,
+      message: `A foto foi ${like ? "curtida" : "discurtida"}.`,
+    });
+  } catch (error) {
+    res.status(404).json({ errors: ["Foto não encontrada"] });
+  }
+};
+
 module.exports = {
   insertPhoto,
   deletePhoto,
@@ -100,4 +128,5 @@ module.exports = {
   getUserPhotos,
   getPhotoById,
   updatePhoto,
+  likePhoto,
 };

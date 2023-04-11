@@ -7,6 +7,7 @@ const {
   getUserPhotos,
   getPhotoById,
   updatePhoto,
+  likePhoto,
 } = require("../controllers/PhotoController");
 const {
   photoInsertValidation,
@@ -30,5 +31,6 @@ router.get("/", authGuard, getAllPhotos);
 router.get("/user/:id", getUserPhotos);
 router.get("/:id", getPhotoById);
 router.put("/:id", authGuard, photoUpdateValidation(), validate, updatePhoto);
+router.put("/like/:id", authGuard, likePhoto);
 
 module.exports = router;
