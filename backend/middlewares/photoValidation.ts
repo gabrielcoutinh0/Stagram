@@ -20,4 +20,14 @@ const photoInsertValidation = () => {
   ];
 };
 
-module.exports = { photoInsertValidation };
+const photoUpdateValidation = () => {
+  return [
+    body("title")
+      .optional()
+      .not()
+      .equals("undefined")
+      .withMessage("Legenda é obrigatória."),
+  ];
+};
+
+module.exports = { photoInsertValidation, photoUpdateValidation };
