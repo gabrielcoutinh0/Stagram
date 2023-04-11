@@ -1,20 +1,22 @@
 import { Schema, model, Types } from "mongoose";
 
 interface IPhoto {
+  userId: Schema.Types.ObjectId;
   image: string;
-  title?: string;
+  title: string;
   likes?: [];
   comments?: [];
-  userId: Types.ObjectId;
+  username: string;
 }
 
 const photoSchema = new Schema<IPhoto>(
   {
-    image: { type: String, requerid: true },
-    title: { type: String, requerid: false },
-    likes: { type: String, requerid: false },
-    comments: { type: String, requerid: false },
     userId: Types.ObjectId,
+    image: { type: String, requerid: true },
+    title: { type: String, requerid: true },
+    likes: [{ type: String, requerid: false }],
+    comments: [{ type: String, requerid: false }],
+    username: { type: String, required: true },
   },
   {
     timestamps: true,
