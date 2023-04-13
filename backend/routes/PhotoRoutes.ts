@@ -9,6 +9,7 @@ const {
   updatePhoto,
   likePhoto,
   commentPhoto,
+  deleteComment,
 } = require("../controllers/PhotoController");
 const {
   photoInsertValidation,
@@ -41,5 +42,6 @@ router.put(
   validate,
   commentPhoto
 );
+router.put("/:photoId/comment/:commentId", authGuard, deleteComment);
 
 module.exports = router;

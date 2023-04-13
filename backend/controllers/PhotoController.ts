@@ -140,7 +140,6 @@ const commentPhoto = async (req: Request, res: Response) => {
     photo.comments.push(userComment);
 
     await photo.save();
-    console.log(photo.comments);
 
     res.status(200).json({
       comment: userComment,
@@ -148,6 +147,37 @@ const commentPhoto = async (req: Request, res: Response) => {
     });
   } catch (error) {
     res.status(404).json({ errors: ["Foto não encontrada."] });
+  }
+};
+
+const deleteComment = async (req: Request, res: Response) => {
+  const { photoId } = req.params;
+  const { commentId } = req.params;
+
+  try {
+    const reqUser = req.user;
+    const user = await User.findById(reqUser);
+    const photo = await Photo.findById(photoId);
+
+    if (photo) {
+      for (let i = 0; i < photo.comments.length; i++) {
+        if (photo.comments[i].userId.equals(user._id)) {
+          if (photo.comments[i]._id.equals(commentId)) {
+            photo.comments.pull({ _id: commentId });
+            await photo.save();
+          }
+        }
+      }
+    }
+
+    res.status(200).json({
+      comment: commentId,
+      message: "O comentário foi removido com sucesso!",
+    });
+  } catch (error) {
+    res.status(404).json({
+      errors: ["Ocorreu um erro, por favor tente novamente mais tarde."],
+    });
   }
 };
 
@@ -160,4 +190,5 @@ module.exports = {
   updatePhoto,
   likePhoto,
   commentPhoto,
+  deleteComment,
 };
