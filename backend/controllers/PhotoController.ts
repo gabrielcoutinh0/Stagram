@@ -1,22 +1,27 @@
 import { Request, Response } from "express";
 import { Types } from "mongoose";
-const Photo = require("../models/Photo");
-const User = require("../models/User");
+const Photo = require("../models/Photo.model");
+const User = require("../models/User.model");
 
 const insertPhoto = async (req: Request, res: Response) => {
   const { title } = req.body;
+
   const image = req.file?.filename;
+  const reqUser = req.user;
+  const user = await User.findById(reqUser);
 
   try {
-    const reqUser = req.user;
-    const user = await User.findById(reqUser._id);
-
     const newPhoto = await Photo.create({
+      username: user,
       image,
       title,
-      userId: user._id,
-      username: user.username,
     });
+
+    await User.findByIdAndUpdate(
+      user,
+      { $push: { photosPosted: newPhoto } },
+      { new: true }
+    );
 
     res.status(201).json(newPhoto);
   } catch (error) {
@@ -28,40 +33,60 @@ const insertPhoto = async (req: Request, res: Response) => {
 
 const deletePhoto = async (req: Request, res: Response) => {
   const { id } = req.params;
+
   const reqUser = req.user;
+  const user = await User.findById(reqUser);
+  const photo = await Photo.findById(new Types.ObjectId(id));
+
+  if (!photo?.username.equals(user._id)) {
+    return res.status(200).json({
+      errors: "Houve um problema, por favor tente novamente mais tarde.",
+    });
+  }
 
   try {
-    const photo = await Photo.findById(new Types.ObjectId(id));
+    await Photo.findByIdAndDelete(id);
 
-    if (!photo.userId.equals(reqUser._id))
-      throw new Error("Ocorreu um erro, por favor tente novamente mais tarde.");
-
-    await Photo.findByIdAndDelete(photo._id);
-
-    res
-      .status(200)
-      .json({ id: photo._id, message: "Foto excluída com sucesso." });
+    await User.findByIdAndUpdate(
+      user,
+      { $pull: { photosPosted: id } },
+      { new: true }
+    );
+    res.status(200).json({ docs: "Foto excluída com sucesso." });
   } catch (error) {
     res.status(404).json({ errors: ["Foto não encontrada!"] });
   }
 };
 
 const getAllPhotos = async (req: Request, res: Response) => {
-  const photos = await Photo.find({})
-    .sort([["createdAt", -1]])
-    .exec();
+  try {
+    const photos = await Photo.find({})
+      .sort([["createdAt", -1]])
+      .exec();
 
-  return res.status(200).json(photos);
+    res.status(200).json(photos);
+  } catch (error) {
+    res.status(200).json({
+      errors: "Houve um problema, por favor tente novamente mais tarde.",
+    });
+  }
 };
 
 const getUserPhotos = async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  const photos = await Photo.find({ username: id })
-    .sort([["createdAt", -1]])
-    .exec();
+  try {
+    const photos = await User.find({ username: id })
+      .select("photosPosted")
+      .sort([["createdAt", -1]])
+      .exec();
 
-  return res.status(200).json(photos);
+    return res.status(200).json(photos);
+  } catch (error) {
+    res.status(200).json({
+      errors: "Houve um problema, por favor tente novamente mais tarde.",
+    });
+  }
 };
 
 const getPhotoById = async (req: Request, res: Response) => {
@@ -78,13 +103,15 @@ const getPhotoById = async (req: Request, res: Response) => {
 const updatePhoto = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { title } = req.body;
+  const reqUser = req.user;
+  const photo = await Photo.findById(id);
+
+  if (!photo.username.equals(reqUser._id))
+    return res.status(200).json({
+      errors: "Houve um problema, por favor tente novamente mais tarde.",
+    });
+
   try {
-    const reqUser = req.user;
-    const photo = await Photo.findById(id);
-
-    if (!photo.userId.equals(reqUser._id))
-      throw new Error("Ocorreu um erro, por favor tente novamente mais tarde.");
-
     if (title) photo.title = title;
     await photo.save();
     res.status(200).json({ photo, message: "Foto atualizada com sucesso!" });
@@ -96,11 +123,11 @@ const updatePhoto = async (req: Request, res: Response) => {
 const likePhoto = async (req: Request, res: Response) => {
   const { id } = req.params;
   let like: boolean;
-  try {
-    const reqUser = req.user;
-    const photo = await Photo.findById(id);
-    const ArrayLikes = photo.likes;
+  const reqUser = req.user;
+  const photo = await Photo.findById(id);
+  const ArrayLikes = photo.likes;
 
+  try {
     if (ArrayLikes.includes(reqUser._id)) {
       ArrayLikes.pull(reqUser._id);
       like = false;
@@ -124,20 +151,22 @@ const likePhoto = async (req: Request, res: Response) => {
 const commentPhoto = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { comment } = req.body;
+  const reqUser = req.user;
+  const user = await User.findById(reqUser);
+  const photo = await Photo.findById(id);
 
   try {
-    const reqUser = req.user;
-    const user = await User.findById(reqUser._id);
-    const photo = await Photo.findById(id);
-
     const userComment = {
+      username: user,
       comment,
-      userName: user.username,
-      userImage: user.profileImage,
-      userId: user._id,
+      createdAt: Date.now(),
     };
 
-    photo.comments.push(userComment);
+    await Photo.findByIdAndUpdate(
+      photo,
+      { $push: { comments: userComment } },
+      { new: true }
+    );
 
     await photo.save();
 
@@ -153,22 +182,26 @@ const commentPhoto = async (req: Request, res: Response) => {
 const deleteComment = async (req: Request, res: Response) => {
   const { photoId } = req.params;
   const { commentId } = req.params;
+  const reqUser = req.user;
+  const user = await User.findById(reqUser);
+  const photo = await Photo.findById(photoId);
+
+  for (let i = 0; i < photo.comments.length; i++) {
+    if (photo.comments[i]._id.equals(commentId))
+      if (!photo.comments[i].username.equals(user._id))
+        return res.status(200).json({
+          errors: "Desculpa, você não pode deletar esse comentário.",
+        });
+  }
 
   try {
-    const reqUser = req.user;
-    const user = await User.findById(reqUser);
-    const photo = await Photo.findById(photoId);
+    await Photo.findByIdAndUpdate(
+      photo,
+      { $pull: { comments: { _id: commentId } } },
+      { safe: true }
+    );
 
-    if (photo) {
-      for (let i = 0; i < photo.comments.length; i++) {
-        if (photo.comments[i].userId.equals(user._id)) {
-          if (photo.comments[i]._id.equals(commentId)) {
-            photo.comments.pull({ _id: commentId });
-            await photo.save();
-          }
-        }
-      }
-    }
+    await photo.save();
 
     res.status(200).json({
       comment: commentId,
