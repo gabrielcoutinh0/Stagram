@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-const User = require("../models/User");
+const User = require("../models/User.model");
 const jwt = require("jsonwebtoken");
 const jwtSecret = `${process.env.JWT_SECRET}`;
 

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Types } from "mongoose";
-const User = require("../models/User");
+const User = require("../models/User.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
@@ -17,10 +17,12 @@ const register = async (req: Request, res: Response) => {
   const userName = await User.findOne({ username });
 
   if (userMail) {
-    res.status(422).json({ errors: ["Por favor, utilize outro e-mail"] });
+    res.status(400).json({ email: ["Usuário já cadastrado com esse e-mail."] });
     return;
   } else if (userName) {
-    res.status(422).json({ errors: ["Por favor, utilize outro username"] });
+    res
+      .status(422)
+      .json({ username: ["Usuário já cadastrado com esse username."] });
     return;
   }
 
@@ -29,8 +31,8 @@ const register = async (req: Request, res: Response) => {
 
   const newUser = await User.create({
     name,
-    username,
     email,
+    username,
     password: passwordHash,
   });
 
@@ -40,7 +42,7 @@ const register = async (req: Request, res: Response) => {
       .json({ errors: ["Houve um erro, por favor tente mais tarde."] });
   }
 
-  res.status(201).json({
+  res.status(200).json({
     _id: newUser._id,
     token: generateToken(newUser._id),
   });
