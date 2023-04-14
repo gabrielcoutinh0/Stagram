@@ -1,6 +1,6 @@
-const express = require("express");
-const router = express.Router();
-const {
+import { Router } from "express";
+export const router = Router();
+import {
   insertPhoto,
   deletePhoto,
   getAllPhotos,
@@ -10,15 +10,15 @@ const {
   likePhoto,
   commentPhoto,
   deleteComment,
-} = require("../controllers/PhotoController");
-const {
+} from "../controllers/PhotoController";
+import {
   photoInsertValidation,
   photoUpdateValidation,
   commentValidation,
-} = require("../middlewares/photoValidation");
-const authGuard = require("../middlewares/authGuard");
-const validate = require("../middlewares/handleValidation");
-const { imageUpload } = require("../middlewares/imageUpload");
+} from "../middlewares/photoValidation";
+import { authGuard } from "../middlewares/authGuard";
+import { validate } from "../middlewares/handleValidation";
+import { imageUpload } from "../middlewares/imageUpload";
 
 router.post(
   "/",
@@ -43,5 +43,3 @@ router.put(
   commentPhoto
 );
 router.put("/:photoId/comment/:commentId", authGuard, deleteComment);
-
-module.exports = router;

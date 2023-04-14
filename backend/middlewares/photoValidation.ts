@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CustomValidator } from "express-validator";
-const { body } = require("express-validator");
+import { body } from "express-validator";
 
-const photoInsertValidation = () => {
+export const photoInsertValidation = () => {
   return [
     body("title")
       .not()
@@ -20,7 +20,7 @@ const photoInsertValidation = () => {
   ];
 };
 
-const photoUpdateValidation = () => {
+export const photoUpdateValidation = () => {
   return [
     body("title")
       .optional()
@@ -30,14 +30,8 @@ const photoUpdateValidation = () => {
   ];
 };
 
-const commentValidation = () => {
+export const commentValidation = () => {
   return [
     body("comment").isString().withMessage("O comentário é obrigatório."),
   ];
-};
-
-module.exports = {
-  photoInsertValidation,
-  photoUpdateValidation,
-  commentValidation,
 };

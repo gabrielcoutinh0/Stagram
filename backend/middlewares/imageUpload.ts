@@ -1,6 +1,6 @@
 import { Request } from "express";
 import multer, { FileFilterCallback } from "multer";
-const path = require("path");
+import path from "path";
 
 type DestinationCallback = (error: Error | null, destination: string) => void;
 type FileNameCallback = (error: Error | null, filename: string) => void;
@@ -26,7 +26,7 @@ const imageStorage = multer.diskStorage({
   },
 });
 
-const imageUpload = multer({
+export const imageUpload = multer({
   storage: imageStorage,
   fileFilter(req: Request, file: Express.Multer.File, cb: FileFilterCallback) {
     const type = path.extname(file.originalname);
@@ -40,5 +40,3 @@ const imageUpload = multer({
     cb(null, true);
   },
 });
-
-module.exports = { imageUpload };

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { Types } from "mongoose";
-const Photo = require("../models/Photo.model");
-const User = require("../models/User.model");
+import { Photo } from "../models/Photo.model";
+import { User } from "../models/User.model";
 
-const insertPhoto = async (req: Request, res: Response) => {
+export const insertPhoto = async (req: Request, res: Response) => {
   const { title } = req.body;
 
   const image = req.file?.filename;
@@ -31,14 +31,14 @@ const insertPhoto = async (req: Request, res: Response) => {
   }
 };
 
-const deletePhoto = async (req: Request, res: Response) => {
+export const deletePhoto = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const reqUser = req.user;
   const user = await User.findById(reqUser);
   const photo = await Photo.findById(new Types.ObjectId(id));
 
-  if (!photo?.username.equals(user._id)) {
+  if (!photo?.username.equals(new Types.ObjectId(user?._id))) {
     return res.status(200).json({
       errors: "Houve um problema, por favor tente novamente mais tarde.",
     });
@@ -58,7 +58,7 @@ const deletePhoto = async (req: Request, res: Response) => {
   }
 };
 
-const getAllPhotos = async (req: Request, res: Response) => {
+export const getAllPhotos = async (req: Request, res: Response) => {
   try {
     const photos = await Photo.find({})
       .sort([["createdAt", -1]])
@@ -72,7 +72,7 @@ const getAllPhotos = async (req: Request, res: Response) => {
   }
 };
 
-const getUserPhotos = async (req: Request, res: Response) => {
+export const getUserPhotos = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
@@ -89,7 +89,7 @@ const getUserPhotos = async (req: Request, res: Response) => {
   }
 };
 
-const getPhotoById = async (req: Request, res: Response) => {
+export const getPhotoById = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
@@ -100,47 +100,60 @@ const getPhotoById = async (req: Request, res: Response) => {
   }
 };
 
-const updatePhoto = async (req: Request, res: Response) => {
+export const updatePhoto = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { title } = req.body;
   const reqUser = req.user;
   const photo = await Photo.findById(id);
 
-  if (!photo.username.equals(reqUser._id))
-    return res.status(200).json({
-      errors: "Houve um problema, por favor tente novamente mais tarde.",
-    });
+  if (reqUser !== undefined || reqUser !== null) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    if (!photo?.username.equals(reqUser!._id))
+      return res.status(200).json({
+        errors: "Houve um problema, por favor tente novamente mais tarde.",
+      });
+  }
 
   try {
-    if (title) photo.title = title;
-    await photo.save();
+    if (photo !== null) {
+      if (title) photo.title = title;
+      await photo?.save();
+    }
     res.status(200).json({ photo, message: "Foto atualizada com sucesso!" });
   } catch (error) {
     res.status(404).json({ errors: ["Foto não encontrada."] });
   }
 };
 
-const likePhoto = async (req: Request, res: Response) => {
+export const likePhoto = async (req: Request, res: Response) => {
   const { id } = req.params;
   let like: boolean;
   const reqUser = req.user;
   const photo = await Photo.findById(id);
-  const ArrayLikes = photo.likes;
+  const ArrayLikes = photo?.likes;
 
   try {
-    if (ArrayLikes.includes(reqUser._id)) {
-      ArrayLikes.pull(reqUser._id);
+    if (ArrayLikes?.includes(new Types.ObjectId(reqUser?._id))) {
+      await Photo.findByIdAndUpdate(
+        photo,
+        { $pull: { likes: reqUser?._id } },
+        { new: true }
+      );
       like = false;
     } else {
-      ArrayLikes.push(reqUser._id);
+      await Photo.findByIdAndUpdate(
+        photo,
+        { $push: { likes: reqUser?._id } },
+        { new: true }
+      );
       like = true;
     }
 
-    photo.save();
+    photo?.save();
 
     res.status(200).json({
       photoId: id,
-      userId: reqUser._id,
+      userId: reqUser?._id,
       message: `A foto foi ${like ? "curtida" : "discurtida"}.`,
     });
   } catch (error) {
@@ -148,7 +161,7 @@ const likePhoto = async (req: Request, res: Response) => {
   }
 };
 
-const commentPhoto = async (req: Request, res: Response) => {
+export const commentPhoto = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { comment } = req.body;
   const reqUser = req.user;
@@ -168,7 +181,7 @@ const commentPhoto = async (req: Request, res: Response) => {
       { new: true }
     );
 
-    await photo.save();
+    await photo?.save();
 
     res.status(200).json({
       comment: userComment,
@@ -179,20 +192,20 @@ const commentPhoto = async (req: Request, res: Response) => {
   }
 };
 
-const deleteComment = async (req: Request, res: Response) => {
+export const deleteComment = async (req: Request, res: Response) => {
   const { photoId } = req.params;
   const { commentId } = req.params;
   const reqUser = req.user;
   const user = await User.findById(reqUser);
   const photo = await Photo.findById(photoId);
 
-  for (let i = 0; i < photo.comments.length; i++) {
-    if (photo.comments[i]._id.equals(commentId))
-      if (!photo.comments[i].username.equals(user._id))
-        return res.status(200).json({
-          errors: "Desculpa, você não pode deletar esse comentário.",
-        });
-  }
+  if (photo?.comments !== undefined)
+    for (let i = 0; i < photo?.comments.length; i++)
+      if (photo?.comments[i]?._id.equals(new Types.ObjectId(commentId)))
+        if (!photo?.comments[i]?.username.equals(new Types.ObjectId(user?._id)))
+          return res.status(200).json({
+            errors: "Desculpa, você não pode deletar esse comentário.",
+          });
 
   try {
     await Photo.findByIdAndUpdate(
@@ -201,7 +214,7 @@ const deleteComment = async (req: Request, res: Response) => {
       { safe: true }
     );
 
-    await photo.save();
+    await photo?.save();
 
     res.status(200).json({
       comment: commentId,
@@ -212,16 +225,4 @@ const deleteComment = async (req: Request, res: Response) => {
       errors: ["Ocorreu um erro, por favor tente novamente mais tarde."],
     });
   }
-};
-
-module.exports = {
-  insertPhoto,
-  deletePhoto,
-  getAllPhotos,
-  getUserPhotos,
-  getPhotoById,
-  updatePhoto,
-  likePhoto,
-  commentPhoto,
-  deleteComment,
 };

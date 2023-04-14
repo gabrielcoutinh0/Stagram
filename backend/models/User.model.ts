@@ -1,13 +1,18 @@
 import { Schema, model } from "mongoose";
+import { ObjectId } from "mongodb";
 
-interface IUser {
+export interface IUser {
+  _id: ObjectId;
   username: string;
   name: string;
   email: string;
   password: string;
-  profileImage?: string;
-  bio?: string;
-  photosPosted?: [Schema.Types.ObjectId];
+  profileImage: string;
+  bio: string;
+  photosPosted: [ObjectId];
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
 }
 
 const userSchema = new Schema<IUser>(
@@ -18,13 +23,11 @@ const userSchema = new Schema<IUser>(
     password: { type: String, requerid: true },
     profileImage: { type: String, requerid: false },
     bio: { type: String, requerid: false },
-    photosPosted: [{ type: Schema.Types.ObjectId, ref: "Photo" }],
+    photosPosted: [{ type: ObjectId, ref: "Photo" }],
   },
   {
     timestamps: true,
   }
 );
 
-const User = model<IUser>("User", userSchema);
-
-module.exports = User;
+export const User = model<IUser>("User", userSchema);

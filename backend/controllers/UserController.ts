@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { Types } from "mongoose";
-const User = require("../models/User.model");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+import { User } from "../models/User.model";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 const jwtSecret = `${process.env.JWT_SECRET}`;
 
@@ -10,7 +10,7 @@ const generateToken = (id: string) => {
   return jwt.sign({ id }, jwtSecret, { expiresIn: "7d" });
 };
 
-const register = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {
   const { name, username, email, password } = req.body;
 
   const userMail = await User.findOne({ email });
@@ -44,11 +44,11 @@ const register = async (req: Request, res: Response) => {
 
   res.status(200).json({
     _id: newUser._id,
-    token: generateToken(newUser._id),
+    token: generateToken(newUser._id.toString()),
   });
 };
 
-const login = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body;
 
   const user = await User.findOne({ username });
@@ -66,45 +66,47 @@ const login = async (req: Request, res: Response) => {
   res.status(201).json({
     _id: user._id,
     profileImage: user.profileImage,
-    token: generateToken(user._id),
+    token: generateToken(user._id.toString()),
   });
 };
 
-const getCurrentUser = async (req: Request, res: Response) => {
+export const getCurrentUser = async (req: Request, res: Response) => {
   const user = req.user;
   res.status(200).json(user);
 };
 
-const update = async (req: Request, res: Response) => {
+export const update = async (req: Request, res: Response) => {
   const { name, password, bio } = req.body;
   let profileImage = null;
 
   if (req.file) profileImage = req.file.filename;
 
   const reqUser = req.user;
-  const user = await User.findById(new Types.ObjectId(reqUser._id)).select(
+  const user = await User.findById(new Types.ObjectId(reqUser?._id)).select(
     "-password"
   );
 
-  if (name) user.name = name;
+  if (user !== null) {
+    if (name) user.name = name;
 
-  if (password) {
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt);
+    if (password) {
+      const salt = await bcrypt.genSalt();
+      const passwordHash = await bcrypt.hash(password, salt);
 
-    user.password = passwordHash;
+      user.password = passwordHash;
+    }
+
+    if (profileImage) user.profileImage = profileImage;
+
+    if (bio) user.bio = bio;
+
+    await user.save();
+
+    res.status(200).json(user);
   }
-
-  if (profileImage) user.profileImage = profileImage;
-
-  if (bio) user.bio = bio;
-
-  await user.save();
-
-  res.status(200).json(user);
 };
 
-const getUserById = async (req: Request, res: Response) => {
+export const getUserById = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
@@ -116,5 +118,3 @@ const getUserById = async (req: Request, res: Response) => {
     res.status(404).json({ errors: ["Usuário não encontrado."] });
   }
 };
-
-module.exports = { register, login, getCurrentUser, update, getUserById };

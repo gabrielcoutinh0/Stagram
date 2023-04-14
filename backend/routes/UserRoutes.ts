@@ -1,20 +1,20 @@
-import express from "express";
-const router = express.Router();
-const {
+import { Router } from "express";
+export const router = Router();
+import {
   register,
   login,
   getCurrentUser,
   update,
   getUserById,
-} = require("../controllers/UserController");
-const {
+} from "../controllers/UserController";
+import {
   userCreateValidation,
   loginValidation,
   userUpdateValidation,
-} = require("../middlewares/userValidations");
-const authGuard = require("../middlewares/authGuard");
-const validate = require("../middlewares/handleValidation");
-const { imageUpload } = require("../middlewares/imageUpload");
+} from "../middlewares/userValidations";
+import { authGuard } from "../middlewares/authGuard";
+import { validate } from "../middlewares/handleValidation";
+import { imageUpload } from "../middlewares/imageUpload";
 
 router.post("/register", userCreateValidation(), validate, register);
 router.post("/login", loginValidation(), validate, login);
@@ -28,5 +28,3 @@ router.put(
   update
 );
 router.get("/:id", getUserById);
-
-module.exports = router;

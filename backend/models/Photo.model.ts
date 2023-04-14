@@ -1,28 +1,30 @@
+import { ObjectId } from "mongodb";
 import { Schema, model } from "mongoose";
 
 interface IPhoto {
-  username: Schema.Types.ObjectId;
+  username: ObjectId;
   image: string;
   title: string;
-  likes?: [Schema.Types.ObjectId];
+  likes?: [ObjectId];
   comments?: [IComment];
 }
 
 interface IComment {
-  username: Schema.Types.ObjectId;
+  _id: ObjectId;
+  username: ObjectId;
   comment: string;
   createdAt: Date;
 }
 
 const photoSchema = new Schema<IPhoto>(
   {
-    username: { type: Schema.Types.ObjectId, ref: "User" },
+    username: { type: ObjectId, ref: "User" },
     image: { type: String, requerid: true },
     title: String,
-    likes: [Schema.Types.ObjectId],
+    likes: [ObjectId],
     comments: [
       {
-        username: { type: Schema.Types.ObjectId, ref: "User" },
+        username: { type: ObjectId, ref: "User" },
         comment: String,
         createdAt: Date,
       },
@@ -33,6 +35,4 @@ const photoSchema = new Schema<IPhoto>(
   }
 );
 
-const Photo = model<IPhoto>("Photo", photoSchema);
-
-module.exports = Photo;
+export const Photo = model<IPhoto>("Photo", photoSchema);

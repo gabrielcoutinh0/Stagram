@@ -1,5 +1,5 @@
 import { CustomValidator } from "express-validator";
-const { body } = require("express-validator");
+import { body } from "express-validator";
 
 export const userCreateValidation = () => {
   return [
@@ -40,7 +40,7 @@ export const userCreateValidation = () => {
   ];
 };
 
-const loginValidation = () => {
+export const loginValidation = () => {
   return [
     body("username")
       .isString()
@@ -52,7 +52,7 @@ const loginValidation = () => {
   ];
 };
 
-const userUpdateValidation = () => {
+export const userUpdateValidation = () => {
   return [
     body("name")
       .optional()
@@ -63,10 +63,4 @@ const userUpdateValidation = () => {
       .isLength({ min: 5 })
       .withMessage("A senha precisa ter no mínimo 5 caracteres"),
   ];
-};
-
-module.exports = {
-  userCreateValidation,
-  loginValidation,
-  userUpdateValidation,
 };
