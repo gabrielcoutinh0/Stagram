@@ -1,0 +1,55 @@
+:root {
+  --maxWidth-lg: 50.9375rem;
+  --separator: #262626;
+  --txtGray: #737373;
+
+  /* Light Mode */
+  --bgLight: #ffffff;
+  --txtLight: #262626;
+  --bgImageLight: url("./src/assets/logoDark.png");
+
+  /* Dark Mode */
+  --bgDark: #000000;
+  --txtDark: #f5f5f5;
+  --bgImageDark: url("./src/assets/logoLight.png");
+}
+
+@media (prefers-color-schema: dark) {
+  :root {
+    --bg: var(--bgDark);
+    --bg-highlight: var(--bgLight);
+    --txt-highlight: var(--txtLight);
+    --txt: var(--txtDark);
+    --bgImage: var(--bgImageDark);
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-color-schema: light) {
+  :root {
+    --bg: var(--bgLight);
+    --bg-highlight: var(--bgDark);
+    --txt-highlight: var(--txtDark);
+    --txt: var(--txtLight);
+    --bgImage: var(--bgImageLight);
+    color-scheme: light;
+  }
+}
+
+:root[color-scheme="dark"] {
+  --bg: var(--bgDark);
+  --bg-highlight: var(--bgLight);
+  --txt-highlight: var(--txtLight);
+  --txt: var(--txtDark);
+  --bgImage: var(--bgImageDark);
+  color-scheme: dark;
+}
+
+:root[color-scheme="light"] {
+  --bg: var(--bgLight);
+  --bg-highlight: var(--bgDark);
+  --txt-highlight: var(--txtDark);
+  --txt: var(--txtLight);
+  --bgImage: var(--bgImageLight);
+  color-scheme: light;
+}
