@@ -6,6 +6,7 @@ a,
 
 button {
   all: unset;
+  cursor: pointer;
 }
 
 header {
@@ -31,11 +32,32 @@ header {
   height: 29px;
 }
 
+.search {
+  max-width: 300px;
+  width: 100%;
+}
+
+.search input {
+  background: var(--search);
+  border: 0;
+  border-radius: 8px;
+  color: var(--txt);
+  outline: none;
+  padding: 3px 16px;
+  width: 100%;
+  height: 30px;
+  z-index: 2;
+}
+
 nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
   gap: 16px;
+}
+
+.tooltiptext {
+  display: none;
 }
 
 .perfil {
@@ -45,42 +67,6 @@ nav {
   border-radius: 50%;
 }
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: var(--bg-highlight);
-  color: var(--txt-highlight);
-  text-align: center;
-  font-size: 0.8rem;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  top: 150%;
-  left: 50%;
-  margin-left: -60px;
-}
-
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent var(--bg-highlight) transparent;
-}
-
-.tooltip:hover .tooltiptext {
-  animation: 0s linear 1s forwards delayedShow;
-}
-
 .separator {
   border-bottom: 1px solid var(--separator);
 }
@@ -88,6 +74,45 @@ nav {
 @keyframes delayedShow {
   to {
     visibility: visible;
+  }
+}
+
+@media (min-width: 641px) {
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip .tooltiptext {
+    display: block;
+    visibility: hidden;
+    width: 120px;
+    background-color: var(--bg-highlight);
+    color: var(--txt-highlight);
+    text-align: center;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 150%;
+    left: 50%;
+    margin-left: -60px;
+  }
+
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent var(--bg-highlight) transparent;
+  }
+
+  .tooltip:hover .tooltiptext {
+    animation: 0s linear 1s forwards delayedShow;
   }
 }
 

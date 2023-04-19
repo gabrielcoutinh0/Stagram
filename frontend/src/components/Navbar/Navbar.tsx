@@ -21,7 +21,12 @@ export function Navbar() {
         </div>
         <div className={styles.search}>
           <form>
-            <input type="text" placeholder="Pesquisar" />
+            <input
+              type="search"
+              placeholder="Pesquisar"
+              autoCapitalize="none"
+              aria-label="Entrada da pequisa"
+            />
           </form>
         </div>
         <nav>
