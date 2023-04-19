@@ -4,11 +4,6 @@ a,
   text-decoration: none;
 }
 
-button {
-  all: unset;
-  cursor: pointer;
-}
-
 header {
   position: sticky;
   top: 0;
@@ -21,15 +16,6 @@ header {
   max-width: var(--maxWidth-lg);
   margin: 0 auto;
   padding: 0.5rem;
-}
-
-.logo i {
-  display: inline-block;
-  background-image: var(--bgImage);
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 103px;
-  height: 29px;
 }
 
 .search {

@@ -1,7 +1,7 @@
 import styles from "./Navbar.module.css";
 import { Link } from "react-router-dom";
 import { BsGear } from "react-icons/bs";
-import { AiOutlineHome, AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineHome } from "react-icons/ai";
 import { VscDiffAdded } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import { IconContext } from "react-icons/lib";
@@ -16,8 +16,14 @@ export function Navbar() {
   return (
     <header>
       <div className={styles.container}>
-        <div className={styles.logo}>
-          <i aria-label="Stagram" role="img" />
+        <div
+          className="logo"
+          aria-disabled="false"
+          role="button"
+          tabIndex={0}
+          data-focus-visible-added
+        >
+          <i data-visualcompletion="css-img" aria-label="Stagram" role="img" />
         </div>
         <div className={styles.search}>
           <form>

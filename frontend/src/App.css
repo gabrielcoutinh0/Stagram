@@ -59,3 +59,13 @@
   --search: var(--searchLight);
   color-scheme: light;
 }
+
+.logo i {
+  display: inline-block;
+  background-image: var(--bgImage);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 103px;
+  height: 29px;
+  cursor: pointer;
+}
