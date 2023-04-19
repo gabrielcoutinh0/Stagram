@@ -1,7 +1,10 @@
 :root {
   --maxWidth-lg: 50.9375rem;
-  --separator: #262626;
+  --separatorLight: #dbdbdb;
+  --separatorDark: #262626;
   --txtGray: #737373;
+  --btnPrimary: #0095f6;
+  --btnPrimaryHover: #1877f2;
 
   /* Light Mode */
   --bgLight: #ffffff;
@@ -24,6 +27,7 @@
     --txt: var(--txtDark);
     --bgImage: var(--bgImageDark);
     --search: var(--searchDark);
+    --separator: var(--separatorDark);
     color-scheme: dark;
   }
 }
@@ -36,6 +40,7 @@
     --txt: var(--txtLight);
     --bgImage: var(--bgImageLight);
     --search: var(--searchLight);
+    --separator: var(--separatorLight);
     color-scheme: light;
   }
 }
@@ -47,6 +52,7 @@
   --txt: var(--txtDark);
   --bgImage: var(--bgImageDark);
   --search: var(--searchDark);
+  --separator: var(--separatorDark);
   color-scheme: dark;
 }
 
@@ -57,6 +63,7 @@
   --txt: var(--txtLight);
   --bgImage: var(--bgImageLight);
   --search: var(--searchLight);
+  --separator: var(--separatorLight);
   color-scheme: light;
 }
 
@@ -68,4 +75,24 @@
   width: 103px;
   height: 29px;
   cursor: pointer;
+}
+
+.btn-cta {
+  background-color: var(--btnPrimary);
+  border-radius: 8px;
+  color: white;
+  align-items: center;
+  padding: 7px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 0;
+}
+
+.btn-cta:hover {
+  background-color: var(--btnPrimaryHover);
+}
+
+.btn-cta:disabled {
+  opacity: 0.7;
 }
