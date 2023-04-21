@@ -1,11 +1,33 @@
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import styles from "./Auth.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../hooks/hooks";
+import { useLoginUserMutation } from "../../api/authApi";
+import { setUser } from "../../slices/authSlice";
 
 export function Login() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [loginUser, { data, isLoading, error, isError, isSuccess }] =
+    useLoginUserMutation();
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    loginUser({ username, password });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setUser({ _id: data._id, token: data.token }));
+      localStorage.setItem("token", data.token);
+      navigate("/");
+    }
+  }, [dispatch, handleSubmit]);
 
   return (
     <main>
@@ -32,6 +54,9 @@ export function Login() {
                     maxLength={30}
                     type="text"
                     placeholder=" "
+                    onChange={(e) => setUsername(e.target.value)}
+                    value={username}
+                    disabled={isLoading}
                   />
                   <span>Nome de usuário</span>
                 </label>
@@ -47,13 +72,25 @@ export function Login() {
                     name="password"
                     type="password"
                     placeholder=" "
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    disabled={isLoading}
                   />
                   <span>Senha</span>
                 </label>
               </div>
               <div className={styles.buttonWrapper}>
-                <button className="btn-cta">Entrar</button>
+                <button className="btn-cta" disabled={isLoading}>
+                  Entrar
+                </button>
               </div>
+              {isError && (
+                <div className={styles.errors}>
+                  <p aria-atomic="true" role="alert">
+                    {error?.toString()}
+                  </p>
+                </div>
+              )}
             </form>
           </div>
         </div>
