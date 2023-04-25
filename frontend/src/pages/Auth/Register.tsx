@@ -146,7 +146,18 @@ export function Register() {
                 </span>
               </p>
               <div className={styles.buttonWrapper}>
-                <button className="btn-cta" disabled={loading}>
+                <button
+                  className="btn-cta"
+                  disabled={
+                    loading ||
+                    (email &&
+                      name &&
+                      username &&
+                      password &&
+                      passwordConfirmation) === "" ||
+                    password.length <= 5
+                  }
+                >
                   {loading ? "Aguarde..." : "Cadastre-se"}
                 </button>
               </div>

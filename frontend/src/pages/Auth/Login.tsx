@@ -80,7 +80,14 @@ export function Login() {
                 </label>
               </div>
               <div className={styles.buttonWrapper}>
-                <button className="btn-cta" disabled={loading}>
+                <button
+                  className="btn-cta"
+                  disabled={
+                    loading ||
+                    (username && password) === "" ||
+                    password.length <= 5
+                  }
+                >
                   {loading ? "Aguarde..." : "Entrar"}
                 </button>
               </div>
