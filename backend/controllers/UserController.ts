@@ -17,12 +17,14 @@ export const register = async (req: Request, res: Response) => {
   const userName = await User.findOne({ username });
 
   if (userMail) {
-    res.status(400).json({ email: ["Usuário já cadastrado com esse e-mail."] });
+    res
+      .status(400)
+      .json({ errors: ["Usuário já cadastrado com esse e-mail."] });
     return;
   } else if (userName) {
     res
       .status(422)
-      .json({ username: ["Usuário já cadastrado com esse username."] });
+      .json({ errors: ["Usuário já cadastrado com esse username."] });
     return;
   }
 

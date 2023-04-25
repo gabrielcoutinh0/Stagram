@@ -52,7 +52,7 @@ export const deletePhoto = async (req: Request, res: Response) => {
       { $pull: { photosPosted: id } },
       { new: true }
     );
-    res.status(200).json({ docs: "Foto excluída com sucesso." });
+    res.status(200).json({ message: "Foto excluída com sucesso." });
   } catch (error) {
     res.status(404).json({ errors: ["Foto não encontrada!"] });
   }
