@@ -13,10 +13,16 @@ export function Navbar() {
   const { auth } = useAuth();
   const { user } = useSelector((state: RootState) => state.auth);
 
-  const [theme, setTheme] = useState("dark");
+  const storageValue = localStorage.getItem("theme");
+  console.log(storageValue);
+
+  const [theme, setTheme] = useState(
+    storageValue ? JSON.parse(storageValue) : "dark"
+  );
 
   useEffect(() => {
     document.documentElement.setAttribute("color-scheme", theme);
+    localStorage.setItem("theme", JSON.stringify(theme));
   }, [theme]);
 
   return (
