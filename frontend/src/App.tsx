@@ -5,10 +5,12 @@ import { Login } from "./pages/Auth/Login";
 import { Register } from "./pages/Auth/Register";
 import { Navbar } from "./components/Navbar/Navbar";
 import { Footer } from "./components/Footer/Footer";
-import { useAuth } from "./hooks/useAuth";
+import { useAuth } from "./hooks/useRequireAuth";
+import { switchThemeMode } from "./hooks/useSwitchThemeMode";
 
 function App() {
   const { auth, loading } = useAuth();
+  const [theme, setTheme] = switchThemeMode();
 
   if (loading) return <p>Carregando...</p>;
 
