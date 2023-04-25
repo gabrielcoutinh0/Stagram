@@ -8,7 +8,6 @@ import { login, reset } from "../../slices/authSlice";
 
 export function Login() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
@@ -82,7 +81,7 @@ export function Login() {
               </div>
               <div className={styles.buttonWrapper}>
                 <button className="btn-cta" disabled={loading}>
-                  Entrar
+                  {loading ? "Aguarde..." : "Entrar"}
                 </button>
               </div>
               {(error as boolean) && (
