@@ -1,11 +1,45 @@
 import { Link } from "react-router-dom";
 import styles from "./Auth.module.css";
-import { FormEvent } from "react";
+import { FormEvent, useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { AppDispatch } from "../../store";
+import { register, reset } from "../../slices/authSlice";
 
 export function Register() {
+  interface RootState {
+    auth: {
+      loading: boolean;
+      error: string;
+    };
+  }
+
+  const dispatch: AppDispatch = useDispatch();
+  const { loading, error } = useSelector((state: RootState) => state.auth);
+
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const user = {
+      name,
+      username,
+      email,
+      password,
+      passwordConfirmation,
+    };
+
+    dispatch(register(user));
   };
+
+  useEffect(() => {
+    dispatch(reset());
+  }, [dispatch]);
 
   return (
     <main>
@@ -35,6 +69,9 @@ export function Register() {
                     name="email"
                     type="email"
                     placeholder=" "
+                    disabled={loading}
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
                   />
                   <span>E-mail</span>
                 </label>
@@ -49,6 +86,9 @@ export function Register() {
                     name="fullName"
                     type="text"
                     placeholder=" "
+                    disabled={loading}
+                    onChange={(e) => setName(e.target.value)}
+                    value={name}
                   />
                   <span>Nome completo</span>
                 </label>
@@ -64,6 +104,9 @@ export function Register() {
                     maxLength={30}
                     type="text"
                     placeholder=" "
+                    disabled={loading}
+                    onChange={(e) => setUsername(e.target.value)}
+                    value={username}
                   />
                   <span>Nome de usuário</span>
                 </label>
@@ -79,6 +122,9 @@ export function Register() {
                     name="password"
                     type="password"
                     placeholder=" "
+                    disabled={loading}
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
                   />
                   <span>Senha</span>
                 </label>
@@ -90,9 +136,12 @@ export function Register() {
                     aria-required="true"
                     autoCapitalize="off"
                     autoCorrect="off"
-                    name="confirmPassword"
+                    name="passwordConfirmation"
                     type="password"
                     placeholder=" "
+                    disabled={loading}
+                    onChange={(e) => setPasswordConfirmation(e.target.value)}
+                    value={passwordConfirmation}
                   />
                   <span>Confirmar senha</span>
                 </label>
@@ -104,7 +153,9 @@ export function Register() {
                 </span>
               </p>
               <div className={styles.buttonWrapper}>
-                <button className="btn-cta">Cadastre-se</button>
+                <button className="btn-cta" disabled={loading}>
+                  {loading ? "Aguarde..." : "Cadastre-se"}
+                </button>
               </div>
             </form>
           </div>
