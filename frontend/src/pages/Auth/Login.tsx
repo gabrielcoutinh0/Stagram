@@ -2,8 +2,6 @@ import { FormEvent, useEffect, useState } from "react";
 import styles from "./Auth.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/hooks";
-import { useLoginUserMutation } from "../../api/authApi";
-import { setUser } from "../../slices/authSlice";
 
 export function Login() {
   const dispatch = useAppDispatch();
@@ -12,22 +10,11 @@ export function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const [loginUser, { data, isLoading, error, isError, isSuccess }] =
-    useLoginUserMutation();
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    loginUser({ username, password });
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(setUser({ _id: data._id, token: data.token }));
-      localStorage.setItem("token", data.token);
-      navigate("/");
-    }
-  }, [dispatch, handleSubmit]);
+  useEffect(() => {}, []);
 
   return (
     <main>
