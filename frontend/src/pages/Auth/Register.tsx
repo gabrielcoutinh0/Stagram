@@ -3,17 +3,10 @@ import styles from "./Auth.module.css";
 import { FormEvent, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import { register, reset } from "../../slices/authSlice";
 
 export function Register() {
-  interface RootState {
-    auth: {
-      loading: boolean;
-      error: string;
-    };
-  }
-
   const dispatch: AppDispatch = useDispatch();
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
@@ -157,10 +150,10 @@ export function Register() {
                   {loading ? "Aguarde..." : "Cadastre-se"}
                 </button>
               </div>
-              {error && (
+              {(error as boolean) && (
                 <div className={styles.errors}>
                   <p aria-atomic="true" role="alert">
-                    {error}
+                    {error as string}
                   </p>
                 </div>
               )}
