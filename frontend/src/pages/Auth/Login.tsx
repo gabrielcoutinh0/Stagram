@@ -2,19 +2,33 @@ import { FormEvent, useEffect, useState } from "react";
 import styles from "./Auth.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/hooks";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { login, reset } from "../../slices/authSlice";
 
 export function Login() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const { loading, error } = useSelector((state: RootState) => state.auth);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const user = {
+      username,
+      password,
+    };
+
+    dispatch(login(user));
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(reset());
+  }, [dispatch]);
 
   return (
     <main>
@@ -43,7 +57,7 @@ export function Login() {
                     placeholder=" "
                     onChange={(e) => setUsername(e.target.value)}
                     value={username}
-                    disabled={isLoading}
+                    disabled={loading}
                   />
                   <span>Nome de usuário</span>
                 </label>
@@ -61,20 +75,20 @@ export function Login() {
                     placeholder=" "
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
-                    disabled={isLoading}
+                    disabled={loading}
                   />
                   <span>Senha</span>
                 </label>
               </div>
               <div className={styles.buttonWrapper}>
-                <button className="btn-cta" disabled={isLoading}>
+                <button className="btn-cta" disabled={loading}>
                   Entrar
                 </button>
               </div>
-              {isError && (
+              {(error as boolean) && (
                 <div className={styles.errors}>
                   <p aria-atomic="true" role="alert">
-                    {error?.toString()}
+                    {error as string}
                   </p>
                 </div>
               )}
