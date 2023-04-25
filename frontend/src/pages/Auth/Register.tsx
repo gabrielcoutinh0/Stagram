@@ -157,6 +157,13 @@ export function Register() {
                   {loading ? "Aguarde..." : "Cadastre-se"}
                 </button>
               </div>
+              {error && (
+                <div className={styles.errors}>
+                  <p aria-atomic="true" role="alert">
+                    {error}
+                  </p>
+                </div>
+              )}
             </form>
           </div>
         </div>
