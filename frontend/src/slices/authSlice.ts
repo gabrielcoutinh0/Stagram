@@ -6,7 +6,7 @@ const user = JSON.parse(localStorage.getItem("user") || "{}");
 
 interface authState {
   user: IRegister | null;
-  error: boolean | null | unknown;
+  error: boolean | null | string | unknown;
   success: boolean;
   loading: boolean;
 }
