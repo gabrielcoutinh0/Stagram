@@ -12,12 +12,14 @@
   --txtLight: #262626;
   --bgImageLight: url("./src/assets/logoDark.png");
   --searchLight: #efefef;
+  --hoverLight: #00000080;
 
   /* Dark Mode */
   --bgDark: #000000;
   --txtDark: #f5f5f5;
   --bgImageDark: url("./src/assets/logoLight.png");
   --searchDark: #262626;
+  --hoverDark: #ffffff1a;
 }
 
 @media (prefers-color-schema: dark) {
@@ -29,6 +31,7 @@
     --bgImage: var(--bgImageDark);
     --search: var(--searchDark);
     --separator: var(--separatorDark);
+    --hover: var(--hoverDark);
     color-scheme: dark;
   }
 }
@@ -42,6 +45,7 @@
     --bgImage: var(--bgImageLight);
     --search: var(--searchLight);
     --separator: var(--separatorLight);
+    --hover: var(--hoverLight);
     color-scheme: light;
   }
 }
@@ -54,6 +58,7 @@
   --bgImage: var(--bgImageDark);
   --search: var(--searchDark);
   --separator: var(--separatorDark);
+  --hover: var(--hoverDark);
   color-scheme: dark;
 }
 
@@ -65,6 +70,7 @@
   --bgImage: var(--bgImageLight);
   --search: var(--searchLight);
   --separator: var(--separatorLight);
+  --hover: var(--hoverLight);
   color-scheme: light;
 }
 
