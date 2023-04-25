@@ -12,9 +12,10 @@ import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { switchThemeMode } from "../../hooks/useSwitchThemeMode";
 
 export const Dropdown = () => {
-  const { auth } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+
+  const { auth } = useAuth();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [theme, setTheme] = switchThemeMode();
@@ -49,8 +50,8 @@ export const Dropdown = () => {
           <span>Modo {theme === "light" ? "Escuro" : "Claro"}</span>
         </button>
         {auth && (
-          <button>
-            <span onClick={handleLogout}>Sair</span>
+          <button onClick={handleLogout}>
+            <span>Sair</span>
           </button>
         )}
       </div>
