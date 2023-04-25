@@ -1,29 +1,103 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { authService } from "../services/authService";
+import { IRegister, ILogin } from "../utils/type";
 
-export interface AuthState {
-  _id: string | null;
-  token: string | null;
+const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+interface authState {
+  user: IRegister | null;
+  error: boolean | null | unknown;
+  success: boolean;
+  loading: boolean;
 }
 
-const initialState: AuthState = {
-  _id: null,
-  token: null,
+const initialState: authState = {
+  user: user ? user : null,
+  error: false,
+  success: false,
+  loading: false,
 };
+
+export const register = createAsyncThunk(
+  "auth/register",
+  async (user: IRegister, thunkAPI) => {
+    const data = await authService.register(user);
+
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+
+    return data;
+  }
+);
+
+export const logout = createAsyncThunk("auth/logout", async () => {
+  await authService.logout();
+});
+
+export const login = createAsyncThunk(
+  "auth/login",
+  async (user: ILogin, thunkAPI) => {
+    const data = await authService.login(user);
+
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+
+    return data;
+  }
+);
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<{ _id: string; token: string }>) => {
-      state._id = action.payload._id;
-      state.token = action.payload.token;
+    reset: (state) => {
+      state.error = false;
+      state.success = false;
+      state.loading = false;
     },
-    defaultState: (state) => {
-      state = initialState;
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(register.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.user = action.payload;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.user = null;
+      })
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.user = action.payload;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.user = null;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.user = null;
+      });
   },
 });
 
-export const { setUser, defaultState } = authSlice.actions;
-
+export const { reset } = authSlice.actions;
 export default authSlice.reducer;
