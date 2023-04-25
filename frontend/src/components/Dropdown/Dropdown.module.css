@@ -1,0 +1,82 @@
+.dropdown {
+  position: relative;
+}
+
+.dropdown button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--txt);
+  background-color: var(--txt-highlight);
+  border-radius: 6px;
+  border: 0;
+  cursor: pointer;
+}
+
+.dropdown > button {
+  position: relative;
+  z-index: 2;
+}
+
+.dropdown button:hover {
+  background: var(--hover);
+}
+
+.dropdown .menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: var(--txt-highlight);
+  color: var(--txt);
+  width: max-content;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  transition: 0.25s;
+  border: 1px solid var(--bg);
+}
+
+.dropdown .menu::before {
+  content: "";
+  background-color: var(--txt-highlight);
+  border-top: 1px solid var(--bg);
+  border-right: 1px solid var(--bg);
+  position: absolute;
+  top: -5px;
+  right: 15px;
+  width: 8px;
+  height: 8px;
+  rotate: -45deg;
+  z-index: -999;
+  transition: 0.25s;
+}
+
+.dropdown .menu button {
+  gap: 10px;
+  padding: 12px 20px;
+  height: max-content;
+  width: 100%;
+  border-radius: 0;
+}
+
+.dropdown.open .menu {
+  opacity: 1;
+  visibility: visible;
+  translate: 0;
+}
+
+@media (max-width: 640px) {
+  .dropdown .menu {
+    top: -110px;
+  }
+
+  .dropdown .menu::before {
+    top: 83px;
+  }
+}

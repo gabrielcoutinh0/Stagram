@@ -1,0 +1,59 @@
+import styles from "./Dropdown.module.css";
+import { useRef, useState } from "react";
+import { BsGear } from "react-icons/bs";
+import { BsMoon, BsSun } from "react-icons/bs";
+import { IconContext } from "react-icons/lib";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { logout, reset } from "../../slices/authSlice";
+import { useAuth } from "../../hooks/useRequireAuth";
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
+import { switchThemeMode } from "../../hooks/useSwitchThemeMode";
+
+export const Dropdown = () => {
+  const { auth } = useAuth();
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [theme, setTheme] = switchThemeMode();
+  const themeMode = theme === "light" ? "dark" : "light";
+  const ref = useRef<HTMLDivElement>(null);
+
+  useOnClickOutside(ref, () => setIsOpen(false));
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/login");
+  };
+
+  return (
+    <div
+      ref={ref}
+      className={`${styles.dropdown} ${isOpen ? styles.open : ""}`}
+    >
+      <button onClick={() => setIsOpen(!isOpen)}>
+        <IconContext.Provider value={{ size: "24" }}>
+          <BsGear />
+        </IconContext.Provider>
+      </button>
+      <div className={styles.menu}>
+        <button
+          aria-label={`Change theme to ${themeMode} mode`}
+          role="switch"
+          onClick={() => setTheme(themeMode)}
+        >
+          {theme === "light" ? <BsMoon /> : <BsSun />}
+          <span>Modo {theme === "light" ? "Escuro" : "Claro"}</span>
+        </button>
+        {auth && (
+          <button>
+            <span onClick={handleLogout}>Sair</span>
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
