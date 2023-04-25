@@ -5,6 +5,7 @@ a,
 }
 
 header {
+  background-color: var(--bg);
   position: sticky;
   top: 0;
 }
@@ -38,7 +39,7 @@ header {
 nav {
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: baseline;
   gap: 16px;
 }
 
