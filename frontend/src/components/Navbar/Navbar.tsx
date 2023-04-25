@@ -14,10 +14,9 @@ export function Navbar() {
   const { user } = useSelector((state: RootState) => state.auth);
 
   const storageValue = localStorage.getItem("theme");
-  console.log(storageValue);
 
   const [theme, setTheme] = useState(
-    storageValue ? JSON.parse(storageValue) : "dark"
+    storageValue ? JSON.parse(storageValue) : "light"
   );
 
   useEffect(() => {
