@@ -70,14 +70,16 @@ input:not(:placeholder-shown) + span {
   padding: 0 8px;
 }
 
-.hiddenPassword > span {
+.hiddenPassword > button {
   font-size: 14px;
   margin: 0;
   color: var(--txt);
+  background-color: transparent;
+  border: 0;
   user-select: none;
   cursor: pointer;
 }
 
-.hiddenPassword > span:hover {
+.hiddenPassword > button:hover {
   opacity: 0.5;
 }

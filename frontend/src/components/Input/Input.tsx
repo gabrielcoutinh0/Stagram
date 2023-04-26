@@ -59,15 +59,9 @@ function Input({
       {name === "password" && (
         <div className={styles.hiddenPassword}>
           {password!.length >= 1 && (
-            <span
-              aria-disabled="false"
-              role="button"
-              data-focus-visible-added
-              tabIndex={0}
-              onClick={onclick}
-            >
+            <button type="button" data-focus-visible-added onClick={onclick}>
               {showPassword ? "Ocultar" : "Mostrar"}
-            </span>
+            </button>
           )}
         </div>
       )}
