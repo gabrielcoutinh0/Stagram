@@ -40,8 +40,8 @@ export function Register() {
 
   return (
     <main>
-      <div className={styles.wrapper}>
-        <div className={styles.box}>
+      <div className="center">
+        <div className="box" style={{ marginBottom: 0 }}>
           <div
             className={`logo ${styles.logo}`}
             aria-disabled="false"
@@ -168,7 +168,7 @@ export function Register() {
             </form>
           </div>
         </div>
-        <div className={styles.box}>
+        <div className="box" style={{ marginBottom: 0 }}>
           <p className={styles.account}>
             Tem uma conta? <Link to="/login">Conecte-se</Link>
           </p>

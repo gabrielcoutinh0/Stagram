@@ -34,8 +34,8 @@ export function Login() {
 
   return (
     <main>
-      <div className={styles.wrapper}>
-        <div className={styles.box}>
+      <div className="center">
+        <div className="box" style={{ marginBottom: 0 }}>
           <div
             className={`logo ${styles.logo}`}
             aria-disabled="false"
@@ -104,7 +104,7 @@ export function Login() {
             </form>
           </div>
         </div>
-        <div className={styles.box}>
+        <div className="box" style={{ marginBottom: 0 }}>
           <p className={styles.account}>
             Não tem uma conta? <Link to="/register">Cadastre-se</Link>
           </p>

@@ -2,7 +2,7 @@
   --maxWidth-lg: 50.9375rem;
   --separatorLight: #dbdbdb;
   --separatorDark: #262626;
-  --txtGray: #737373;
+  --txtGray: #a8a8a8;
   --btnPrimary: #0095f6;
   --btnPrimaryHover: #1877f2;
   --error: #ed4956;
@@ -96,7 +96,6 @@
   border: 0;
 }
 
-.btn-cta,
 .btn-cta:not(:disabled):hover {
   background-color: var(--btnPrimaryHover);
 }
@@ -104,4 +103,32 @@
 .btn-cta:disabled {
   opacity: 0.7;
   cursor: default;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 350px;
+  width: 100%;
+  border: 1px solid var(--separator);
+  margin: 30px 0 10px 0;
+  padding: 10px 0;
+}
+
+.center {
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+}
+
+@media (max-width: 640px) {
+  .box {
+    border: 0;
+    margin-top: 0 !important;
+    margin-bottom: 50px;
+  }
 }
