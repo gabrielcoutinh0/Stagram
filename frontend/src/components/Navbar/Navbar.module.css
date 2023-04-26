@@ -9,6 +9,7 @@ header {
   position: sticky;
   top: 0;
   transition: 0.3s;
+  z-index: 1;
 }
 
 .container {
@@ -42,6 +43,7 @@ nav {
   justify-content: space-around;
   align-items: baseline;
   gap: 16px;
+  background-color: var(--bg);
 }
 
 .tooltiptext {
