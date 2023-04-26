@@ -58,8 +58,9 @@ export function Login() {
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}
                   disable={loading}
-                  label="Nome de usuário"
-                />
+                >
+                  Nome de usuário
+                </Input>
               </div>
               <div className={`${styles.inputWrapper} ${styles.password}`}>
                 <Input
@@ -73,11 +74,12 @@ export function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                   disable={loading}
-                  label="Senha"
                   password={password}
                   onclick={() => setShowPassword(!showPassword)}
                   showPassword={showPassword}
-                />
+                >
+                  Senha
+                </Input>
               </div>
               <div className={styles.buttonWrapper}>
                 <Button

@@ -13,7 +13,7 @@ type InputType = {
   onChange: ChangeEventHandler<HTMLInputElement> | undefined;
   value: string;
   disable: boolean;
-  label: string;
+  children: string | JSX.Element | JSX.Element[];
   password?: string;
   onclick?: MouseEventHandler<HTMLSpanElement>;
   showPassword?: boolean;
@@ -31,7 +31,7 @@ function Input({
   onChange,
   value,
   disable,
-  label,
+  children,
   password,
   onclick,
   showPassword,
@@ -53,7 +53,7 @@ function Input({
           value={value}
           disabled={disable}
         />
-        <span>{label}</span>
+        <span>{children}</span>
       </label>
 
       {name === "password" && (

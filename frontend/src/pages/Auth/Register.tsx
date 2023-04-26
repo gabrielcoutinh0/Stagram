@@ -66,8 +66,9 @@ export function Register() {
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
                   disable={loading}
-                  label="E-mail"
-                />
+                >
+                  E-mail
+                </Input>
               </div>
               <div className={styles.inputWrapper}>
                 <Input
@@ -80,8 +81,9 @@ export function Register() {
                   onChange={(e) => setName(e.target.value)}
                   value={name}
                   disable={loading}
-                  label="Nome completo"
-                />
+                >
+                  Nome completo
+                </Input>
               </div>
               <div className={styles.inputWrapper}>
                 <Input
@@ -95,8 +97,9 @@ export function Register() {
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}
                   disable={loading}
-                  label="Nome de usuário"
-                />
+                >
+                  Nome de usuário
+                </Input>
               </div>
               <div className={`${styles.inputWrapper} ${styles.password}`}>
                 <Input
@@ -110,11 +113,12 @@ export function Register() {
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                   disable={loading}
-                  label="Senha"
                   password={password}
                   onclick={() => setShowPassword(!showPassword)}
                   showPassword={showPassword}
-                />
+                >
+                  Senha
+                </Input>
               </div>
               <div className={styles.inputWrapper}>
                 <Input
@@ -127,8 +131,9 @@ export function Register() {
                   onChange={(e) => setPasswordConfirmation(e.target.value)}
                   value={passwordConfirmation}
                   disable={loading}
-                  label="Confirmar senha"
-                />
+                >
+                  Confirmar senha
+                </Input>
               </div>
               <p className={styles.policyAndCookie}>
                 <span>
