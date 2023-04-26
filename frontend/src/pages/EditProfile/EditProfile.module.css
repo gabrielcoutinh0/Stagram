@@ -1,0 +1,158 @@
+.pictureAndUsername {
+  align-items: stretch;
+  border: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  font: inherit;
+  font-size: 100%;
+  justify-content: flex-start;
+  margin-bottom: 16px;
+  padding: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.pictureButton > label > input {
+  display: none;
+}
+
+.pictureButton > label > span {
+  color: var(--btnPrimary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.pictureButton > label > span:hover {
+  color: var(--txt);
+}
+
+.picture {
+  flex: 0 0 100px;
+  padding: 0 32px;
+}
+
+.picture > div {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--separator);
+  border-radius: 50%;
+  float: right;
+}
+
+.username > span {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--txt);
+}
+
+.inputWrapper {
+  margin-bottom: 16px;
+}
+
+.inputWrapper > label,
+.textAreaWrapper > label {
+  flex-direction: row-reverse;
+  padding-right: 60px;
+}
+
+.inputWrapper > label > input {
+  padding-right: 8px;
+}
+
+.inputWrapper > label > input:focus-visible,
+.textAreaWrapper > label > textarea:focus-visible {
+  outline: 2px solid var(--txt);
+}
+
+.inputWrapper > label > input:disabled {
+  cursor: not-allowed;
+}
+
+.textInfo {
+  display: flex;
+}
+
+.textInfo > span {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--txtGray);
+  max-width: 355px;
+  width: 100%;
+  margin: 8px 0 16px;
+  padding-right: 60px;
+  padding-left: 164px;
+}
+
+.textAreaWrapper label {
+  display: flex;
+}
+
+.textAreaWrapper textarea {
+  font-size: 16px;
+  background: var(--bg);
+  border: 1px solid var(--separator);
+  border-radius: 3px;
+  margin: 0;
+  padding: 6px 10px;
+  outline: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  resize: vertical;
+  min-height: 60px;
+  height: 60px;
+}
+
+.textAreaWrapper > label > span {
+  flex: 0 0 100px;
+  border: 0;
+  color: var(--txt);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: right;
+  padding: 8px 32px 0;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.formWrapper {
+  margin: 32px 0;
+}
+
+@media (max-width: 640px) {
+  .inputWrapper > label,
+  .textAreaWrapper > label {
+    flex-direction: column-reverse;
+    padding: 0 20px;
+    gap: 10px;
+  }
+
+  .inputWrapper > label > span,
+  .textAreaWrapper > label > span {
+    padding: 0;
+    flex: 0;
+    text-align: left;
+  }
+
+  .inputWrapper > label > input,
+  .textAreaWrapper > label > textarea {
+    text-align: left;
+    width: calc(100% - 20px);
+  }
+
+  .textInfo > span {
+    padding-left: 20px;
+  }
+
+  .picture {
+    flex: 0;
+    padding: 0 20px;
+  }
+}

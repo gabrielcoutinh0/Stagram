@@ -58,8 +58,10 @@ export function Navbar({ theme, setTheme }: themeType) {
                   </Link>
                 </div>
                 <div className={styles.tooltip}>
-                  <div className={styles.perfil}></div>
-                  <span className={styles.tooltiptext}>Perfil</span>
+                  <Link to="/profile">
+                    <div className={styles.perfil}></div>
+                    <span className={styles.tooltiptext}>Perfil</span>
+                  </Link>
                 </div>
               </IconContext.Provider>
               <Dropdown theme={theme} setTheme={setTheme} />
