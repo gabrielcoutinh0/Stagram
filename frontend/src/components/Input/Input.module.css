@@ -48,7 +48,7 @@
   white-space: nowrap;
 }
 
-input:not(:placeholder-shown) + span {
+.label > input:not(:placeholder-shown) + span {
   transform: scale(calc(10 / 12)) translateY(-10px);
 }
 
@@ -82,4 +82,33 @@ input:not(:placeholder-shown) + span {
 
 .hiddenPassword > button:hover {
   opacity: 0.5;
+}
+
+.labelProfile {
+  display: flex;
+}
+
+.labelProfile > input {
+  font-size: 16px;
+  background: var(--bg);
+  border: 1px solid var(--separator);
+  border-radius: 3px;
+  margin: 0;
+  outline: none;
+  overflow: hidden;
+  padding: 9px 0 7px 8px;
+  text-overflow: ellipsis;
+  width: 100%;
+  height: 18px;
+}
+
+.labelProfile > span {
+  flex: 0 0 100px;
+  border: 0;
+  color: var(--txt);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: right;
+  padding: 8px 32px 0;
 }
