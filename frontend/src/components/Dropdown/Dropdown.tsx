@@ -9,16 +9,15 @@ import { AppDispatch } from "../../store";
 import { logout, reset } from "../../slices/authSlice";
 import { useAuth } from "../../hooks/useRequireAuth";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
-import { switchThemeMode } from "../../hooks/useSwitchThemeMode";
+import { themeType } from "../../utils/type";
 
-export const Dropdown = () => {
+export const Dropdown = ({ theme, setTheme }: themeType) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   const { auth } = useAuth();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [theme, setTheme] = switchThemeMode();
   const themeMode = theme === "light" ? "dark" : "light";
   const ref = useRef<HTMLDivElement>(null);
 

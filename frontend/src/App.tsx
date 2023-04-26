@@ -17,7 +17,10 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+        <Navbar
+          theme={theme as string}
+          setTheme={setTheme as React.Dispatch<React.SetStateAction<string>>}
+        />
         <Routes>
           <Route
             path="/"

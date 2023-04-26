@@ -1,18 +1,15 @@
 import styles from "./Navbar.module.css";
-import { Link, useNavigate } from "react-router-dom";
-import { BsGear } from "react-icons/bs";
+import { Link } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import { VscDiffAdded } from "react-icons/vsc";
-import { useEffect, useState } from "react";
 import { IconContext } from "react-icons/lib";
 import { useAuth } from "../../hooks/useRequireAuth";
 import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store";
-import { useDispatch } from "react-redux";
-import { logout, reset } from "../../slices/authSlice";
+import { RootState } from "../../store";
 import { Dropdown } from "../Dropdown/Dropdown";
+import { themeType } from "../../utils/type";
 
-export function Navbar() {
+export function Navbar({ theme, setTheme }: themeType) {
   const { auth } = useAuth();
   const { user } = useSelector((state: RootState) => state.auth);
 
@@ -65,7 +62,7 @@ export function Navbar() {
                   <span className={styles.tooltiptext}>Perfil</span>
                 </div>
               </IconContext.Provider>
-              <Dropdown />
+              <Dropdown theme={theme} setTheme={setTheme} />
             </nav>
           </div>
           <div className={styles.separator} />

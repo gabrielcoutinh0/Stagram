@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export function switchThemeMode() {
   const storageValue = localStorage.getItem("theme");
 
-  const [theme, setTheme] = useState(
+  const [theme, setTheme] = useState<string>(
     storageValue ? JSON.parse(storageValue) : "light"
   );
 
