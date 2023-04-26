@@ -11,8 +11,9 @@ export function Login() {
 
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,7 +62,7 @@ export function Login() {
                   <span>Nome de usuário</span>
                 </label>
               </div>
-              <div className={styles.inputWrapper}>
+              <div className={`${styles.inputWrapper} ${styles.password}`}>
                 <label>
                   <input
                     aria-label="Senha"
@@ -70,7 +71,7 @@ export function Login() {
                     autoComplete="new-password"
                     autoCorrect="off"
                     name="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder=" "
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
@@ -78,6 +79,19 @@ export function Login() {
                   />
                   <span>Senha</span>
                 </label>
+                <div className={styles.hiddenPassword}>
+                  {password.length >= 1 && (
+                    <span
+                      aria-disabled="false"
+                      role="button"
+                      data-focus-visible-added
+                      tabIndex={0}
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? "Ocultar" : "Mostrar"}
+                    </span>
+                  )}
+                </div>
               </div>
               <div className={styles.buttonWrapper}>
                 <button

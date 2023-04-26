@@ -10,6 +10,8 @@ export function Register() {
   const dispatch: AppDispatch = useDispatch();
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -104,7 +106,7 @@ export function Register() {
                   <span>Nome de usuário</span>
                 </label>
               </div>
-              <div className={styles.inputWrapper}>
+              <div className={`${styles.inputWrapper} ${styles.password}`}>
                 <label>
                   <input
                     aria-label="Senha"
@@ -113,7 +115,7 @@ export function Register() {
                     autoComplete="new-password"
                     autoCorrect="off"
                     name="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder=" "
                     disabled={loading}
                     onChange={(e) => setPassword(e.target.value)}
@@ -121,6 +123,13 @@ export function Register() {
                   />
                   <span>Senha</span>
                 </label>
+                <div className={styles.hiddenPassword}>
+                  {password.length >= 1 && (
+                    <span onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? "Ocultar" : "Mostrar"}
+                    </span>
+                  )}
+                </div>
               </div>
               <div className={styles.inputWrapper}>
                 <label>
@@ -130,7 +139,7 @@ export function Register() {
                     autoCapitalize="off"
                     autoCorrect="off"
                     name="passwordConfirmation"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder=" "
                     disabled={loading}
                     onChange={(e) => setPasswordConfirmation(e.target.value)}

@@ -81,7 +81,7 @@ main {
   height: 18px;
 }
 
-.inputWrapper span {
+.inputWrapper label > span {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -110,6 +110,43 @@ input:not(:placeholder-shown) + span {
 .inputWrapper input:not(:placeholder-shown) {
   font-size: 12px !important;
   padding: 14px 0 2px 8px !important;
+}
+
+.inputWrapper.password {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.inputWrapper.password input {
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.hiddenPassword {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid var(--separator);
+  border-top: 1px solid var(--separator);
+  border-bottom: 1px solid var(--separator);
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  height: 34px;
+  padding: 0 8px;
+}
+
+.hiddenPassword > span {
+  font-size: 14px;
+  margin: 0;
+  color: var(--txt);
+  user-select: none;
+  cursor: pointer;
+}
+
+.hiddenPassword > span:hover {
+  opacity: 0.5;
 }
 
 .policyAndCookie {
