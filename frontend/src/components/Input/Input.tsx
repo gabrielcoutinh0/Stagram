@@ -1,59 +1,31 @@
-import { ChangeEventHandler, MouseEventHandler } from "react";
 import styles from "./Input.module.css";
+import { InputHTMLAttributes, MouseEventHandler } from "react";
 
-type InputType = {
-  ariaLabel: string;
-  ariaRequired: boolean;
-  autoCapitalize: string;
-  autoComplete?: string;
-  autoCorrect?: string;
+interface InputType extends InputHTMLAttributes<HTMLInputElement> {
+  profile: boolean;
   name: string;
-  maxLength?: number;
   type: string;
-  onChange: ChangeEventHandler<HTMLInputElement> | undefined;
-  value: string;
-  disable: boolean;
-  children: string | JSX.Element | JSX.Element[];
+  label: string;
   password?: string;
   onclick?: MouseEventHandler<HTMLSpanElement>;
   showPassword?: boolean;
-};
+}
 
 function Input({
-  ariaLabel,
-  ariaRequired,
-  autoCapitalize,
-  autoComplete,
-  autoCorrect,
+  profile,
   name,
-  maxLength,
   type,
-  onChange,
-  value,
-  disable,
-  children,
+  label,
   password,
   onclick,
   showPassword,
+  ...rest
 }: InputType) {
   return (
     <>
-      <label className={styles.label}>
-        <input
-          aria-label={ariaLabel}
-          aria-required={ariaRequired}
-          autoCapitalize={autoCapitalize}
-          autoComplete={autoComplete}
-          autoCorrect={autoCorrect}
-          name={name}
-          maxLength={maxLength}
-          type={type}
-          placeholder=" "
-          onChange={onChange}
-          value={value}
-          disabled={disable}
-        />
-        <span>{children}</span>
+      <label className={profile ? `${styles.labelProfile}` : `${styles.label}`}>
+        <input name={name} type={type} placeholder=" " {...rest} />
+        <span>{label}</span>
       </label>
 
       {name === "password" && (

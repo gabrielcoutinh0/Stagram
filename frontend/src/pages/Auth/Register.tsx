@@ -57,54 +57,56 @@ export function Register() {
             <form onSubmit={handleSubmit}>
               <div className={styles.inputWrapper}>
                 <Input
-                  ariaLabel="E-mail"
-                  ariaRequired={true}
+                  profile={false}
+                  aria-label="E-mail"
+                  aria-required={true}
                   autoCapitalize="true"
                   autoCorrect="off"
                   name="email"
                   type="email"
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
-                  disable={loading}
-                >
-                  E-mail
-                </Input>
+                  disabled={loading}
+                  label="E-mail"
+                />
               </div>
               <div className={styles.inputWrapper}>
                 <Input
-                  ariaLabel="Nome completo"
-                  ariaRequired={true}
+                  profile={false}
+                  aria-label="Nome completo"
+                  aria-required={true}
                   autoCapitalize="sentences"
                   autoCorrect="off"
                   name="fullName"
                   type="text"
                   onChange={(e) => setName(e.target.value)}
                   value={name}
-                  disable={loading}
-                >
-                  Nome completo
-                </Input>
+                  disabled={loading}
+                  label="Nome completo"
+                />
               </div>
               <div className={styles.inputWrapper}>
                 <Input
-                  ariaLabel="Nome de usuário"
-                  ariaRequired={true}
+                  profile={false}
+                  aria-label="Nome de usuário"
+                  aria-required={true}
                   autoCapitalize="off"
                   autoCorrect="off"
+                  autoComplete="username"
                   name="username"
                   maxLength={30}
                   type="text"
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}
-                  disable={loading}
-                >
-                  Nome de usuário
-                </Input>
+                  disabled={loading}
+                  label="Nome de usuário"
+                />
               </div>
               <div className={`${styles.inputWrapper} ${styles.password}`}>
                 <Input
-                  ariaLabel="Senha"
-                  ariaRequired={true}
+                  profile={false}
+                  aria-label="Senha"
+                  aria-required={true}
                   autoCapitalize="off"
                   autoCorrect="off"
                   autoComplete="new-password"
@@ -112,28 +114,27 @@ export function Register() {
                   type={showPassword ? "text" : "password"}
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
-                  disable={loading}
+                  disabled={loading}
                   password={password}
                   onclick={() => setShowPassword(!showPassword)}
                   showPassword={showPassword}
-                >
-                  Senha
-                </Input>
+                  label="Senha"
+                />
               </div>
               <div className={styles.inputWrapper}>
                 <Input
-                  ariaLabel="Confirmar senha"
-                  ariaRequired={true}
+                  profile={false}
+                  aria-label="Confirmar senha"
+                  aria-required={true}
                   autoCapitalize="off"
                   autoCorrect="off"
                   name="passwordConfirmation"
                   type={showPassword ? "text" : "password"}
                   onChange={(e) => setPasswordConfirmation(e.target.value)}
                   value={passwordConfirmation}
-                  disable={loading}
-                >
-                  Confirmar senha
-                </Input>
+                  disabled={loading}
+                  label="Confirmar senha"
+                />
               </div>
               <p className={styles.policyAndCookie}>
                 <span>

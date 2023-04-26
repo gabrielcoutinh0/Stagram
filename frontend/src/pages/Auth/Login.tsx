@@ -48,24 +48,26 @@ export function Login() {
             <form onSubmit={handleSubmit}>
               <div className={styles.inputWrapper}>
                 <Input
-                  ariaLabel="Nome de usuário"
-                  ariaRequired={true}
+                  profile={false}
+                  aria-label="Nome de usuário"
+                  aria-required={true}
                   autoCapitalize="off"
                   autoCorrect="off"
+                  autoComplete="username"
                   name="username"
                   maxLength={30}
                   type="text"
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}
-                  disable={loading}
-                >
-                  Nome de usuário
-                </Input>
+                  disabled={loading}
+                  label="Nome de usuário"
+                />
               </div>
               <div className={`${styles.inputWrapper} ${styles.password}`}>
                 <Input
-                  ariaLabel="Senha"
-                  ariaRequired={true}
+                  profile={false}
+                  aria-label="Senha"
+                  aria-required={true}
                   autoCapitalize="off"
                   autoComplete="new-password"
                   autoCorrect="off"
@@ -73,13 +75,12 @@ export function Login() {
                   type={showPassword ? "text" : "password"}
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
-                  disable={loading}
+                  disabled={loading}
                   password={password}
                   onclick={() => setShowPassword(!showPassword)}
                   showPassword={showPassword}
-                >
-                  Senha
-                </Input>
+                  label="Senha"
+                />
               </div>
               <div className={styles.buttonWrapper}>
                 <Button
