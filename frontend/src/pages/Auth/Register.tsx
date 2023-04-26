@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { register, reset } from "../../slices/authSlice";
 import Input from "../../components/Input/Input";
+import { Button } from "../../components/Button/Button";
 
 export function Register() {
   const dispatch: AppDispatch = useDispatch();
@@ -136,9 +137,9 @@ export function Register() {
                 </span>
               </p>
               <div className={styles.buttonWrapper}>
-                <button
-                  className="btn-cta"
-                  disabled={
+                <Button
+                  loading={loading}
+                  disable={
                     loading ||
                     (email &&
                       name &&
@@ -148,8 +149,8 @@ export function Register() {
                     password.length <= 5
                   }
                 >
-                  {loading ? "Aguarde..." : "Cadastre-se"}
-                </button>
+                  Cadastre-se
+                </Button>
               </div>
               {(error as boolean) && (
                 <div className={styles.errors}>
