@@ -39,6 +39,7 @@
   z-index: 1;
   box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
   border: 1px solid var(--separator);
+  border-radius: 8px;
 }
 
 .dropdown .menu::before {
@@ -60,7 +61,7 @@
   padding: 12px 20px;
   height: max-content;
   width: 100%;
-  border-radius: 0;
+  border-radius: 8px;
 }
 
 .dropdown.open .menu {
