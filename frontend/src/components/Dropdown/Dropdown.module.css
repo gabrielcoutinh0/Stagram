@@ -38,14 +38,14 @@
   visibility: hidden;
   z-index: 1;
   box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
-  border: 1px solid var(--bg);
+  border: 1px solid var(--separator);
 }
 
 .dropdown .menu::before {
   content: "";
   background-color: var(--txt-highlight);
-  border-top: 1px solid var(--bg);
-  border-right: 1px solid var(--bg);
+  border-top: 1px solid var(--separator);
+  border-right: 1px solid var(--separator);
   position: absolute;
   top: -5px;
   right: 15px;
