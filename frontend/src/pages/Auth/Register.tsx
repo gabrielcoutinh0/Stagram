@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { register, reset } from "../../slices/authSlice";
+import Input from "../../components/Input/Input";
 
 export function Register() {
   const dispatch: AppDispatch = useDispatch();
@@ -12,11 +13,11 @@ export function Register() {
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [name, setName] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,99 +55,79 @@ export function Register() {
           <div className={styles.formWrapper}>
             <form onSubmit={handleSubmit}>
               <div className={styles.inputWrapper}>
-                <label>
-                  <input
-                    aria-label="E-mail"
-                    aria-required="true"
-                    autoCapitalize="true"
-                    autoComplete="email"
-                    autoCorrect="off"
-                    name="email"
-                    type="email"
-                    placeholder=" "
-                    disabled={loading}
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                  />
-                  <span>E-mail</span>
-                </label>
+                <Input
+                  ariaLabel="E-mail"
+                  ariaRequired={true}
+                  autoCapitalize="true"
+                  autoCorrect="off"
+                  name="email"
+                  type="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  disable={loading}
+                  label="E-mail"
+                />
               </div>
               <div className={styles.inputWrapper}>
-                <label>
-                  <input
-                    aria-label="Nome completo"
-                    aria-required="true"
-                    autoCapitalize="sentences"
-                    autoCorrect="off"
-                    name="fullName"
-                    type="text"
-                    placeholder=" "
-                    disabled={loading}
-                    onChange={(e) => setName(e.target.value)}
-                    value={name}
-                  />
-                  <span>Nome completo</span>
-                </label>
+                <Input
+                  ariaLabel="Nome completo"
+                  ariaRequired={true}
+                  autoCapitalize="sentences"
+                  autoCorrect="off"
+                  name="fullName"
+                  type="text"
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                  disable={loading}
+                  label="Nome completo"
+                />
               </div>
               <div className={styles.inputWrapper}>
-                <label>
-                  <input
-                    aria-label="Nome de usuário"
-                    aria-required="true"
-                    autoCapitalize="off"
-                    autoCorrect="off"
-                    name="username"
-                    maxLength={30}
-                    type="text"
-                    placeholder=" "
-                    disabled={loading}
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={username}
-                  />
-                  <span>Nome de usuário</span>
-                </label>
+                <Input
+                  ariaLabel="Nome de usuário"
+                  ariaRequired={true}
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  name="username"
+                  maxLength={30}
+                  type="text"
+                  onChange={(e) => setUsername(e.target.value)}
+                  value={username}
+                  disable={loading}
+                  label="Nome de usuário"
+                />
               </div>
               <div className={`${styles.inputWrapper} ${styles.password}`}>
-                <label>
-                  <input
-                    aria-label="Senha"
-                    aria-required="true"
-                    autoCapitalize="off"
-                    autoComplete="new-password"
-                    autoCorrect="off"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder=" "
-                    disabled={loading}
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                  />
-                  <span>Senha</span>
-                </label>
-                <div className={styles.hiddenPassword}>
-                  {password.length >= 1 && (
-                    <span onClick={() => setShowPassword(!showPassword)}>
-                      {showPassword ? "Ocultar" : "Mostrar"}
-                    </span>
-                  )}
-                </div>
+                <Input
+                  ariaLabel="Senha"
+                  ariaRequired={true}
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  autoComplete="new-password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  disable={loading}
+                  label="Senha"
+                  password={password}
+                  onclick={() => setShowPassword(!showPassword)}
+                  showPassword={showPassword}
+                />
               </div>
               <div className={styles.inputWrapper}>
-                <label>
-                  <input
-                    aria-label="Confirmar senha"
-                    aria-required="true"
-                    autoCapitalize="off"
-                    autoCorrect="off"
-                    name="passwordConfirmation"
-                    type={showPassword ? "text" : "password"}
-                    placeholder=" "
-                    disabled={loading}
-                    onChange={(e) => setPasswordConfirmation(e.target.value)}
-                    value={passwordConfirmation}
-                  />
-                  <span>Confirmar senha</span>
-                </label>
+                <Input
+                  ariaLabel="Confirmar senha"
+                  ariaRequired={true}
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  name="passwordConfirmation"
+                  type={showPassword ? "text" : "password"}
+                  onChange={(e) => setPasswordConfirmation(e.target.value)}
+                  value={passwordConfirmation}
+                  disable={loading}
+                  label="Confirmar senha"
+                />
               </div>
               <p className={styles.policyAndCookie}>
                 <span>

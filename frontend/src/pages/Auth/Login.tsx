@@ -1,10 +1,11 @@
 import { FormEvent, useEffect, useState } from "react";
 import styles from "./Auth.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { login, reset } from "../../slices/authSlice";
+import Input from "../../components/Input/Input";
 
 export function Login() {
   const dispatch = useAppDispatch();
@@ -45,53 +46,37 @@ export function Login() {
           <div className={styles.formWrapper}>
             <form onSubmit={handleSubmit}>
               <div className={styles.inputWrapper}>
-                <label>
-                  <input
-                    aria-label="Nome de usuário"
-                    aria-required="true"
-                    autoCapitalize="off"
-                    autoCorrect="off"
-                    name="username"
-                    maxLength={30}
-                    type="text"
-                    placeholder=" "
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={username}
-                    disabled={loading}
-                  />
-                  <span>Nome de usuário</span>
-                </label>
+                <Input
+                  ariaLabel="Nome de usuário"
+                  ariaRequired={true}
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  name="username"
+                  maxLength={30}
+                  type="text"
+                  onChange={(e) => setUsername(e.target.value)}
+                  value={username}
+                  disable={loading}
+                  label="Nome de usuário"
+                />
               </div>
               <div className={`${styles.inputWrapper} ${styles.password}`}>
-                <label>
-                  <input
-                    aria-label="Senha"
-                    aria-required="true"
-                    autoCapitalize="off"
-                    autoComplete="new-password"
-                    autoCorrect="off"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder=" "
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                    disabled={loading}
-                  />
-                  <span>Senha</span>
-                </label>
-                <div className={styles.hiddenPassword}>
-                  {password.length >= 1 && (
-                    <span
-                      aria-disabled="false"
-                      role="button"
-                      data-focus-visible-added
-                      tabIndex={0}
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? "Ocultar" : "Mostrar"}
-                    </span>
-                  )}
-                </div>
+                <Input
+                  ariaLabel="Senha"
+                  ariaRequired={true}
+                  autoCapitalize="off"
+                  autoComplete="new-password"
+                  autoCorrect="off"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  disable={loading}
+                  label="Senha"
+                  password={password}
+                  onclick={() => setShowPassword(!showPassword)}
+                  showPassword={showPassword}
+                />
               </div>
               <div className={styles.buttonWrapper}>
                 <button
