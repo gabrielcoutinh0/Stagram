@@ -85,7 +85,7 @@ export function Login() {
               <div className={styles.buttonWrapper}>
                 <Button
                   loading={loading}
-                  disable={
+                  disabled={
                     loading ||
                     (username && password) === "" ||
                     password.length <= 5
@@ -95,7 +95,7 @@ export function Login() {
                 </Button>
               </div>
               {(error as boolean) && (
-                <div className={styles.errors}>
+                <div className="errors">
                   <p aria-atomic="true" role="alert">
                     {error as string}
                   </p>
@@ -104,7 +104,7 @@ export function Login() {
             </form>
           </div>
         </div>
-        <div className="box" style={{ marginBottom: 0 }}>
+        <div className="box" style={{ marginBottom: 45 }}>
           <p className={styles.account}>
             Não tem uma conta? <Link to="/register">Cadastre-se</Link>
           </p>

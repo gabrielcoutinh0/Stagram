@@ -145,7 +145,7 @@ export function Register() {
               <div className={styles.buttonWrapper}>
                 <Button
                   loading={loading}
-                  disable={
+                  disabled={
                     loading ||
                     (email &&
                       name &&
@@ -159,7 +159,7 @@ export function Register() {
                 </Button>
               </div>
               {(error as boolean) && (
-                <div className={styles.errors}>
+                <div className="errors">
                   <p aria-atomic="true" role="alert">
                     {error as string}
                   </p>
@@ -168,7 +168,7 @@ export function Register() {
             </form>
           </div>
         </div>
-        <div className="box" style={{ marginBottom: 0 }}>
+        <div className="box" style={{ marginBottom: 45 }}>
           <p className={styles.account}>
             Tem uma conta? <Link to="/login">Conecte-se</Link>
           </p>

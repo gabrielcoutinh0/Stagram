@@ -1,12 +1,13 @@
-type ButtonType = {
-  loading: boolean;
-  disable: boolean;
-  children: string | JSX.Element | JSX.Element[];
-};
+import { ButtonHTMLAttributes } from "react";
 
-export function Button({ loading, disable, children }: ButtonType) {
+interface ButtonType extends ButtonHTMLAttributes<HTMLButtonElement> {
+  loading: boolean;
+  children: string | JSX.Element | JSX.Element[];
+}
+
+export function Button({ loading, children, ...rest }: ButtonType) {
   return (
-    <button className="btn-cta" disabled={disable}>
+    <button className="btn-cta" {...rest}>
       {loading ? "Aguarde..." : `${children}`}
     </button>
   );
