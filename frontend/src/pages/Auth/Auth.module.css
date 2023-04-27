@@ -75,11 +75,3 @@
 .account a:focus-visible {
   outline: #1877f2 auto 2px;
 }
-
-.errors {
-  color: var(--error);
-  margin: 20px 40px 10px 40px;
-  font-size: 12px;
-  text-align: center;
-  font-weight: 400;
-}
