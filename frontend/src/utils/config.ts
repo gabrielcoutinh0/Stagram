@@ -7,10 +7,9 @@ export function requestConfig(
   method: string,
   data: IRegister | ILogin | string,
   token: string | null = null,
-  image: string | null = null
+  image: boolean | null = null
 ) {
   let config: RequestInit;
-  const headers = new Headers();
 
   if (image) {
     config = {
