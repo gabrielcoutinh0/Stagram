@@ -15,3 +15,12 @@ export type themeType = {
   theme: string;
   setTheme: React.Dispatch<React.SetStateAction<string>>;
 };
+
+export interface IData {
+  username: string;
+  name: string;
+  email: string;
+  password: string;
+  profileImage?: string;
+  bio?: string;
+}
