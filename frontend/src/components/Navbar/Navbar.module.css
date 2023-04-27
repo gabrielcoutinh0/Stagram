@@ -41,19 +41,39 @@ header {
 nav {
   display: flex;
   justify-content: space-around;
-  align-items: baseline;
+  align-items: center;
   gap: 16px;
   background-color: var(--bg);
+}
+
+.tooltip {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 0;
+}
+
+nav > a:nth-child(1):hover,
+nav > a:nth-child(2):hover {
+  cursor: pointer;
+  background-color: var(--hover);
+}
+
+.tooltip:hover {
+  background-color: var(--hover);
 }
 
 .tooltiptext {
   display: none;
 }
 
-.perfil {
-  width: 24px;
-  height: 24px;
-  border: 1px solid var(--txt);
+.perfil img {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--separator);
   border-radius: 50%;
 }
 
@@ -70,7 +90,6 @@ nav {
 @media (min-width: 641px) {
   .tooltip {
     position: relative;
-    display: inline-block;
   }
 
   .tooltip .tooltiptext {
