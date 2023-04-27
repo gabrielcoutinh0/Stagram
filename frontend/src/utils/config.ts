@@ -1,6 +1,7 @@
 import { IRegister, ILogin } from "./type";
 
 export const api = import.meta.env.VITE_SERVER_ENDPOINT;
+export const uploads = import.meta.env.VITE_UPLOADS_SERVER;
 
 export function requestConfig(
   method: string,
@@ -9,6 +10,7 @@ export function requestConfig(
   image: string | null = null
 ) {
   let config: RequestInit;
+  const headers = new Headers();
 
   if (image) {
     config = {
@@ -25,16 +27,14 @@ export function requestConfig(
     config = {
       method,
       body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
     };
   }
 
-  const authHeader = new Headers();
-
   if (token) {
-    authHeader.append("Authorization", `Bearer ${token}`);
+    config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
   }
 
   return config;
