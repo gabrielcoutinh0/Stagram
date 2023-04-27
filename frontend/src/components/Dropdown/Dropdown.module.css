@@ -9,7 +9,7 @@
   width: 40px;
   height: 40px;
   color: var(--txt);
-  background-color: var(--txt-highlight);
+  background-color: transparent;
   border-radius: 6px;
   border: 0;
   cursor: pointer;
