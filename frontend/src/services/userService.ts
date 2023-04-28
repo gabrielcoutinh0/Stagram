@@ -15,8 +15,23 @@ async function profile(data: IData, token: string) {
   }
 }
 
+const updateProfile = async (data: IData, token: string) => {
+  const config = requestConfig("PUT", data, token);
+
+  try {
+    const res = await fetch(api + "/users/", config)
+      .then((res) => console.log("PROMISE --> ", res.json()))
+      .catch((err) => err);
+
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const userService = {
   profile,
+  updateProfile,
 };
 
 export default userService;

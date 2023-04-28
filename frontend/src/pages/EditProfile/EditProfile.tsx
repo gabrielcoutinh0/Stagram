@@ -5,8 +5,9 @@ import { Button } from "../../components/Button/Button";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import { profile } from "../../slices/userSlice";
+import { profile, resetMessage, updateProfile } from "../../slices/userSlice";
 import { uploads } from "../../utils/config";
+import { IData } from "../../utils/type";
 
 export function EditProfile() {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,8 +22,28 @@ export function EditProfile() {
   const [profileImage, setProfileImage] = useState<string | File>("");
   const [previewImage, setPreviewImage] = useState<File>();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    return;
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const userData: IData = {};
+
+    if (name) Object.assign(userData, { name: name });
+    if (profileImage) Object.assign(userData, { profileImage: profileImage });
+    if (bio) Object.assign(userData, { bio: bio });
+
+    const formData = new FormData();
+
+    const userFormData = Object.keys(userData).forEach((key) => {
+      formData.append(key, userData[key as keyof typeof formData.set]);
+    });
+
+    formData.append("user", userFormData as keyof typeof formData.set);
+
+    await dispatch(updateProfile(formData as IData));
+
+    setTimeout(() => {
+      dispatch(resetMessage());
+    }, 2000);
   };
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -39,10 +60,11 @@ export function EditProfile() {
 
   useEffect(() => {
     if (user) {
-      setUsername(user.username);
-      setName(user.name);
-      setEmail(user.email);
+      user.username ? setUsername(user.username) : "";
+      user.name ? setName(user.name) : "";
+      user.email ? setEmail(user.email) : "";
       user.bio ? setBio(user.bio) : "";
+      user.profileImage ? setProfileImage(user.profileImage) : "";
     }
   }, [user]);
 
@@ -127,10 +149,11 @@ export function EditProfile() {
             </div>
           </div>
           <div className={styles.buttonWrapper}>
-            <Button disable={loading} loading={loading}>
+            <Button disabled={loading} loading={loading}>
               Enviar
             </Button>
           </div>
+          {message as string}
           {(error as boolean) && (
             <div className="errors">
               <p aria-atomic="true" role="alert">
