@@ -23,7 +23,7 @@ export function Navbar({ theme, setTheme }: themeType) {
 
   useEffect(() => {
     dispatch(profile());
-  }, [dispatch]);
+  }, [dispatch, user?.profileImage]);
 
   return (
     <>
@@ -57,14 +57,14 @@ export function Navbar({ theme, setTheme }: themeType) {
               <IconContext.Provider
                 value={{ className: "icon", size: "1.5rem" }}
               >
-                <Link to="/" className={styles.tooltip}>
-                  <div>
+                <Link to="/">
+                  <div className={styles.tooltip}>
                     <AiOutlineHome />
                     <span className={styles.tooltiptext}>Home</span>
                   </div>
                 </Link>
-                <Link to="/" className={styles.tooltip}>
-                  <div>
+                <Link to="/">
+                  <div className={styles.tooltip}>
                     <VscDiffAdded />
                     <span className={styles.tooltiptext}>Add Photo</span>
                   </div>
