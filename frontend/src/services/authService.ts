@@ -1,7 +1,7 @@
 import { api, requestConfig } from "../utils/config";
-import { IRegister, ILogin } from "../utils/type";
+import { IData } from "../utils/type";
 
-async function register(data: IRegister) {
+async function register(data: IData) {
   const config = requestConfig("POST", data);
 
   try {
@@ -23,7 +23,7 @@ function logout() {
   localStorage.removeItem("user");
 }
 
-async function login(data: ILogin) {
+async function login(data: IData) {
   const config = requestConfig("POST", data);
 
   try {
