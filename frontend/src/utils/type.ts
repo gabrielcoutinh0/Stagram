@@ -6,6 +6,8 @@ export interface IData {
   passwordConfirmation?: string;
   profileImage?: string | File;
   bio?: string;
+  newPassword?: string;
+  newPasswordConfirmation?: string;
 }
 
 export type themeType = {

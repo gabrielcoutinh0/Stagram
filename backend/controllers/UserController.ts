@@ -78,7 +78,7 @@ export const getCurrentUser = async (req: Request, res: Response) => {
 };
 
 export const update = async (req: Request, res: Response) => {
-  const { name, bio } = req.body;
+  const { name, bio, password, newPassword } = req.body;
   let profileImage = null;
 
   if (req.file) profileImage = req.file.filename;
@@ -87,47 +87,35 @@ export const update = async (req: Request, res: Response) => {
   const user = await User.findById(new Types.ObjectId(reqUser?._id)).select(
     "-password"
   );
-
-  try {
-    if (user !== null) {
-      if (name) user.name = name;
-      if (profileImage) user.profileImage = profileImage;
-      if (bio) user.bio = bio;
-      await user.save();
-
-      res.status(200).json(user);
-    }
-  } catch (error) {
-    res
-      .status(422)
-      .json({ errors: ["Houve um erro, por favor tente mais tarde."] });
-  }
-};
-
-export const passwordUpdate = async (req: Request, res: Response) => {
-  const { password, newPassword } = req.body;
-  const reqUser = req.user;
   const userPassword = await User.findById(
     new Types.ObjectId(reqUser?._id)
   ).select("password");
 
   try {
-    if (userPassword !== null) {
-      const validPassword = await bcrypt.compare(
-        password,
-        userPassword.password
-      );
-      if (validPassword) {
-        const salt = await bcrypt.genSalt();
-        const passwordHash = await bcrypt.hash(newPassword, salt);
-        userPassword.password = passwordHash;
-        await userPassword.save();
+    if (userPassword && user !== null) {
+      if (password && newPassword) {
+        const validPassword = await bcrypt.compare(
+          password,
+          userPassword.password
+        );
+        if (validPassword) {
+          const salt = await bcrypt.genSalt();
+          const passwordHash = await bcrypt.hash(newPassword, salt);
+          userPassword.password = passwordHash;
+          await userPassword.save();
+          res.status(200).json({ success: ["Senha alterada com sucesso!"] });
+        } else {
+          return res.status(422).json({ errors: ["Senha inválida."] });
+        }
       } else {
-        return res.status(422).json({ errors: ["Senha inválida."] });
+        if (name) user.name = name;
+        if (profileImage) user.profileImage = profileImage;
+        if (bio) user.bio = bio;
+        await user.save();
+
+        res.status(200).json(user);
       }
     }
-
-    res.status(200).json({ success: ["Senha alterada com sucesso!"] });
   } catch (error) {
     res
       .status(422)

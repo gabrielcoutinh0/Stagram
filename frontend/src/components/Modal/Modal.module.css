@@ -1,0 +1,64 @@
+.content {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  color: var(--txt);
+  background-color: var(--bgModal);
+  backdrop-filter: blur(3px);
+  z-index: 10;
+}
+
+body > #root > .App {
+  background-color: red !important;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.boxModal {
+  position: relative;
+  max-width: max-content;
+  width: 100%;
+  border: 1px solid var(--separator);
+  border-radius: 8px;
+}
+
+.bodyModal {
+  overflow: hidden;
+  background-color: var(--bg);
+  border-radius: 8px;
+  padding: 32px;
+}
+
+.btnClose {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.btnClose > span {
+  font-size: 32px;
+  user-select: none;
+}
+
+.headModal {
+  display: block;
+  background-color: var(--bg);
+  padding-bottom: 16px;
+  text-align: center;
+}
+
+.headModal > span {
+  font-size: 20px;
+  line-height: 28px;
+}
