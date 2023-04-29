@@ -1,5 +1,5 @@
 import styles from "./Dropdown.module.css";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { BsGear } from "react-icons/bs";
 import { BsMoon, BsSun } from "react-icons/bs";
 import { IconContext } from "react-icons/lib";
@@ -21,7 +21,7 @@ export const Dropdown = ({ theme, setTheme }: themeType) => {
   const themeMode = theme === "light" ? "dark" : "light";
   const ref = useRef<HTMLDivElement>(null);
 
-  useOnClickOutside(ref, () => setIsOpen(false));
+  useOnClickOutside(ref, () => setIsOpen(!open));
 
   const handleLogout = () => {
     dispatch(logout());
