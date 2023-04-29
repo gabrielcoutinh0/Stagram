@@ -20,7 +20,7 @@ const updateProfile = async (data: IData, token: string) => {
 
   try {
     const res = await fetch(api + "/users/", config)
-      .then((res) => console.log("PROMISE --> ", res.json()))
+      .then((res) => res.json())
       .catch((err) => err);
 
     return res;
