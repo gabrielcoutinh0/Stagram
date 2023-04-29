@@ -1,29 +1,29 @@
 import styles from "./Navbar.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import { VscDiffAdded } from "react-icons/vsc";
 import { IconContext } from "react-icons/lib";
 import { useAuth } from "../../hooks/useRequireAuth";
 import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store";
+import { RootState } from "../../store";
 import { Dropdown } from "../Dropdown/Dropdown";
 import { themeType } from "../../utils/type";
-import { useDispatch } from "react-redux";
-import { profile } from "../../slices/userSlice";
 import { uploads } from "../../utils/config";
 
 export function Navbar({ theme, setTheme }: themeType) {
-  const dispatch = useDispatch<AppDispatch>();
-  const { user, message, error, loading } = useSelector(
-    (state: RootState) => state.user
+  const { user, error, loading } = useSelector(
+    (state: RootState) => state.auth
+  );
+  const [profileImage, setProfileImage] = useState<string | File | undefined>(
+    ""
   );
 
   const { auth } = useAuth();
 
   useEffect(() => {
-    dispatch(profile());
-  }, [dispatch, user?.profileImage]);
+    setProfileImage(user?.profileImage);
+  }, [user?.profileImage]);
 
   return (
     <>
@@ -74,7 +74,7 @@ export function Navbar({ theme, setTheme }: themeType) {
                     <div className={styles.perfil}>
                       {user?.profileImage ? (
                         <img
-                          src={`${uploads}/users/${user?.profileImage}`}
+                          src={`${uploads}/users/${profileImage}`}
                           alt={`Foto de ${user?.name}`}
                         />
                       ) : (
