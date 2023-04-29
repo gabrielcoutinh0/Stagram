@@ -58,9 +58,32 @@ export const userUpdateValidation = () => {
       .optional()
       .isLength({ min: 3 })
       .withMessage("O nome precisa ter no mínimo 3 caracteres."),
+  ];
+};
+
+export const newPasswordUpdateValidation = () => {
+  return [
     body("password")
-      .optional()
+      .isString()
+      .withMessage("A senha é obrigatória.")
       .isLength({ min: 5 })
       .withMessage("A senha precisa ter no mínimo 5 caracteres"),
+
+    body("newPassword")
+      .isString()
+      .withMessage("A nova senha é obrigatória.")
+      .isLength({ min: 5 })
+      .withMessage("A nova senha precisa ter no mínimo 5 caracteres"),
+
+    body("newPasswordConfirmation")
+      .isString()
+      .withMessage("A confirmação de senha é obrigatória.")
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .custom((value: CustomValidator, { req }: any) => {
+        if (value != req.body.newPassword) {
+          throw new Error("As novas senhas não são iguais.");
+        }
+        return true;
+      }),
   ];
 };
