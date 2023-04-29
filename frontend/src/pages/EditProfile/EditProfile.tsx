@@ -8,6 +8,9 @@ import { AppDispatch, RootState } from "../../store";
 import { profile, resetMessage, updateProfile } from "../../slices/userSlice";
 import { uploads } from "../../utils/config";
 import { IData } from "../../utils/type";
+import { useSearchParams } from "react-router-dom";
+import { Modal } from "../../components/Modal/Modal";
+import { ModalPassword } from "../../components/ModalPassword/ModalPassword";
 
 export function EditProfile() {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,28 +25,31 @@ export function EditProfile() {
   const [profileImage, setProfileImage] = useState<string | File>("");
   const [previewImage, setPreviewImage] = useState<File>();
 
+  const [params, setParams] = useSearchParams();
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!params.get("changePassword")) {
+      const userData: IData = {};
 
-    const userData: IData = {};
+      if (name) Object.assign(userData, { name: name });
+      if (profileImage) Object.assign(userData, { profileImage: profileImage });
+      if (bio) Object.assign(userData, { bio: bio });
 
-    if (name) Object.assign(userData, { name: name });
-    if (profileImage) Object.assign(userData, { profileImage: profileImage });
-    if (bio) Object.assign(userData, { bio: bio });
+      const formData = new FormData();
 
-    const formData = new FormData();
+      const userFormData = Object.keys(userData).forEach((key) => {
+        formData.append(key, userData[key as keyof typeof formData.set]);
+      });
 
-    const userFormData = Object.keys(userData).forEach((key) => {
-      formData.append(key, userData[key as keyof typeof formData.set]);
-    });
+      formData.append("user", userFormData as keyof typeof formData.set);
 
-    formData.append("user", userFormData as keyof typeof formData.set);
+      await dispatch(updateProfile(formData as IData));
 
-    await dispatch(updateProfile(formData as IData));
-
-    setTimeout(() => {
-      dispatch(resetMessage());
-    }, 2000);
+      setTimeout(() => {
+        dispatch(resetMessage());
+      }, 2000);
+    }
   };
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +62,7 @@ export function EditProfile() {
 
   useEffect(() => {
     dispatch(profile());
-  }, [dispatch]);
+  }, [dispatch, setParams]);
 
   useEffect(() => {
     if (user) {
@@ -149,11 +155,24 @@ export function EditProfile() {
             </div>
           </div>
           <div className={styles.buttonWrapper}>
-            <Button disabled={loading} loading={loading}>
+            <Button disabled={loading} loading={loading} type="submit">
               Enviar
             </Button>
+            <span
+              role="button"
+              onClick={() => setParams({ ...params, changePassword: "true" })}
+            >
+              Mudar senhar
+            </span>
+            <ModalPassword modal={Modal} />
           </div>
-          {message as string}
+          {!params.get("changePassword") && message && (
+            <div className="sucess">
+              <p aria-atomic="true" role="alert">
+                {message as string}
+              </p>
+            </div>
+          )}
           {(error as boolean) && (
             <div className="errors">
               <p aria-atomic="true" role="alert">

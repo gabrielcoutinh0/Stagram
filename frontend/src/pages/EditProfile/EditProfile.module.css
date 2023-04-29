@@ -27,7 +27,8 @@
   z-index: -1;
 }
 
-.pictureButton > label > span {
+.pictureButton > label > span,
+.buttonWrapper > span {
   color: var(--btnPrimary);
   font-size: 14px;
   font-weight: 500;
@@ -40,7 +41,8 @@
   border-radius: 3px;
 }
 
-.pictureButton > label > span:hover {
+.pictureButton > label > span:hover,
+.buttonWrapper > span:hover {
   color: var(--txt);
 }
 
@@ -140,7 +142,11 @@
 
 .buttonWrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+}
+
+.buttonWrapper > span {
+  align-self: center;
 }
 
 .formWrapper {
