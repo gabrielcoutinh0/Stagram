@@ -64,6 +64,10 @@
   border-radius: 8px;
 }
 
+.menu button:focus-visible {
+  outline: 1px solid var(--separator);
+}
+
 .dropdown.open .menu {
   opacity: 1;
   visibility: visible;
