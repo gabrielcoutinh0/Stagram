@@ -105,6 +105,7 @@ export function Register() {
               <div className={`${styles.inputWrapper} ${styles.password}`}>
                 <Input
                   profile={false}
+                  wantShowPassword={true}
                   aria-label="Senha"
                   aria-required={true}
                   autoCapitalize="off"

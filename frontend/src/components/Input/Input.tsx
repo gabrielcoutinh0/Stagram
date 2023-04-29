@@ -3,6 +3,7 @@ import { InputHTMLAttributes, MouseEventHandler } from "react";
 
 interface InputType extends InputHTMLAttributes<HTMLInputElement> {
   profile: boolean;
+  wantShowPassword?: boolean;
   name: string;
   type: string;
   label: string;
@@ -13,6 +14,7 @@ interface InputType extends InputHTMLAttributes<HTMLInputElement> {
 
 function Input({
   profile,
+  wantShowPassword,
   name,
   type,
   label,
@@ -28,7 +30,7 @@ function Input({
         <span>{label}</span>
       </label>
 
-      {name === "password" && (
+      {wantShowPassword && (
         <div className={styles.hiddenPassword}>
           {password!.length >= 1 && (
             <button type="button" data-focus-visible-added onClick={onclick}>
