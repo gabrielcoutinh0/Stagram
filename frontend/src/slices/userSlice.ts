@@ -59,26 +59,26 @@ export const userSlice = createSlice({
         state.loading = true;
         state.error = false;
       })
-      .addCase(profile.fulfilled, (state, action) => {
+      .addCase(profile.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.success = true;
         state.error = null;
-        state.user = action.payload;
+        state.user = payload;
       })
       .addCase(updateProfile.pending, (state) => {
         state.loading = true;
         state.error = false;
       })
-      .addCase(updateProfile.fulfilled, (state, action) => {
+      .addCase(updateProfile.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.success = true;
         state.error = null;
-        state.user = action.payload;
+        state.user = payload;
         state.message = "Usuário atualizado com sucesso!";
       })
-      .addCase(updateProfile.rejected, (state, action) => {
+      .addCase(updateProfile.rejected, (state, { payload }) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = payload;
         state.user = null;
       });
   },
