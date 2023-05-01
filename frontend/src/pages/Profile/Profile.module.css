@@ -1,0 +1,109 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--maxWidth-lg);
+  margin: 0 auto;
+  padding: 30px 20px;
+  z-index: 0;
+}
+
+.headerProfile {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  margin-bottom: 44px;
+  width: 100%;
+}
+
+.wrapperPicture {
+  display: flex;
+  justify-content: center;
+  margin-right: 30px;
+  width: 30%;
+}
+
+.picture > img {
+  width: 150px;
+  height: 150px;
+  border: 1px solid var(--separator);
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.dataProfile {
+  width: 100%;
+}
+
+.wrapperUsernameAndEdit {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.wrapperUsernameAndEdit > h2 {
+  font-size: 20px;
+}
+
+.btnEdit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 8px;
+  background-color: var(--btnEdit);
+  color: #000 !important;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.btnEdit:hover {
+  background-color: var(--separatorLight);
+}
+
+.publications {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.publications > span {
+  font-weight: 700;
+}
+
+.nameProfile {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.bio {
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+.separator {
+  border-bottom: 1px solid var(--separator);
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .picture > img {
+    width: 77px;
+    height: 77px;
+  }
+
+  .wrapperUsernameAndEdit {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+
+  .wrapperUsernameAndEdit > a {
+    width: 100%;
+  }
+}

@@ -7,11 +7,12 @@
   --btnPrimaryHover: #1877f2;
   --error: #ed4956;
   --sucess: #4bb543;
+  --btnEdit: #efefef;
 
   /* Light Mode */
   --bgLight: #ffffff;
   --txtLight: #262626;
-  --bgImageLight: url("./src/assets/logoDark.png");
+  --bgImageLight: url("/src/assets/logoDark.png");
   --searchLight: #efefef;
   --hoverLight: #0000000d;
   --bgModalLight: #00000066;
@@ -19,7 +20,7 @@
   /* Dark Mode */
   --bgDark: #000000;
   --txtDark: #f5f5f5;
-  --bgImageDark: url("./src/assets/logoLight.png");
+  --bgImageDark: url("/src/assets/logoLight.png");
   --searchDark: #262626;
   --hoverDark: #ffffff1a;
   --bgModalDark: #ffffff66;

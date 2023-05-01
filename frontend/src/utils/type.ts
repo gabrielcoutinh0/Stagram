@@ -1,4 +1,5 @@
 export interface IData {
+  _id?: string;
   name?: string;
   username?: string;
   email?: string;
@@ -6,6 +7,7 @@ export interface IData {
   passwordConfirmation?: string;
   profileImage?: string | File;
   bio?: string;
+  photosPosted?: [string];
   newPassword?: string;
   newPasswordConfirmation?: string;
 }

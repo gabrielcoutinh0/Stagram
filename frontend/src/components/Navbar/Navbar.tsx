@@ -12,18 +12,9 @@ import { themeType } from "../../utils/type";
 import { uploads } from "../../utils/config";
 
 export function Navbar({ theme, setTheme }: themeType) {
-  const { user, error, loading } = useSelector(
-    (state: RootState) => state.auth
-  );
-  const [profileImage, setProfileImage] = useState<string | File | undefined>(
-    ""
-  );
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const { auth } = useAuth();
-
-  useEffect(() => {
-    setProfileImage(user?.profileImage);
-  }, [user?.profileImage]);
 
   return (
     <>
@@ -69,13 +60,13 @@ export function Navbar({ theme, setTheme }: themeType) {
                     <span className={styles.tooltiptext}>Add Photo</span>
                   </div>
                 </Link>
-                <Link to="/profile">
+                <Link to={`/${user?.username}`}>
                   <div className={styles.tooltip}>
                     <div className={styles.perfil}>
                       {user?.profileImage ? (
                         <img
-                          src={`${uploads}/users/${profileImage}`}
-                          alt={`Foto de ${user?.name}`}
+                          src={`${uploads}/users/${user?.profileImage}`}
+                          alt={`Foto de ${user?.username}`}
                         />
                       ) : (
                         <img

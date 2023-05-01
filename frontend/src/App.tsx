@@ -8,6 +8,7 @@ import { Footer } from "./components/Footer/Footer";
 import { useAuth } from "./hooks/useRequireAuth";
 import { switchThemeMode } from "./hooks/useSwitchThemeMode";
 import { EditProfile } from "./pages/EditProfile/EditProfile";
+import { Profile } from "./pages/Profile/Profile";
 
 function App() {
   const { auth, loading } = useAuth();
@@ -28,7 +29,11 @@ function App() {
             element={auth ? <Home /> : <Navigate to="/login" />}
           />
           <Route
-            path="/profile"
+            path="/:id"
+            element={auth ? <Profile /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/profile/edit"
             element={auth ? <EditProfile /> : <Navigate to="/login" />}
           />
           <Route

@@ -90,7 +90,7 @@ export function EditProfile() {
                   alt={`Foto de ${user?.name}`}
                 />
               ) : (
-                <img src="./userWithoutPhoto.jpg" alt="Usuário sem foto" />
+                <img src="/userWithoutPhoto.jpg" alt="Usuário sem foto" />
               )}
             </div>
             <div className={styles.updatePhoto}>
