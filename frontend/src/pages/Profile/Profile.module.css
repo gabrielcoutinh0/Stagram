@@ -75,6 +75,14 @@
   font-weight: 700;
 }
 
+.publicationsMobile {
+  display: none;
+}
+
+.nameAndBioMobile {
+  display: none;
+}
+
 .nameProfile {
   font-weight: 500;
   font-size: 16px;
@@ -91,6 +99,9 @@
 }
 
 @media (max-width: 640px) {
+  .headerProfile {
+    margin-bottom: 16px;
+  }
   .picture > img {
     width: 77px;
     height: 77px;
@@ -105,5 +116,31 @@
 
   .wrapperUsernameAndEdit > a {
     width: 100%;
+  }
+
+  .wrapperPicture {
+    justify-content: center;
+  }
+
+  .publications {
+    display: none;
+  }
+
+  .nameAndBio {
+    display: none;
+  }
+
+  .publicationsMobile {
+    display: block;
+    margin-left: auto;
+  }
+
+  .nameAndBioMobile {
+    display: block;
+    margin-right: auto;
+  }
+
+  .separator {
+    margin-top: 21px;
   }
 }

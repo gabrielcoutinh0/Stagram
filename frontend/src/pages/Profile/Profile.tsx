@@ -53,7 +53,7 @@ export function Profile() {
             <span>{user?.photosPosted?.length} </span>
             publicações
           </div>
-          <div>
+          <div className={styles.nameAndBio}>
             <span className={styles.nameProfile}>{user?.name}</span>
             <div className={styles.bio}>
               <span>{user?.bio}</span>
@@ -61,6 +61,16 @@ export function Profile() {
           </div>
         </section>
       </header>
+      <div className={styles.publicationsMobile}>
+        <span>{user?.photosPosted?.length} </span>
+        publicações
+      </div>
+      <div className={styles.nameAndBioMobile}>
+        <span className={styles.nameProfile}>{user?.name}</span>
+        <div className={styles.bio}>
+          <span>{user?.bio}</span>
+        </div>
+      </div>
       <div className={styles.separator} />
     </div>
   );
