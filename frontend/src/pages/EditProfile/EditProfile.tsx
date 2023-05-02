@@ -29,27 +29,27 @@ export function EditProfile() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!params.get("changePassword")) {
-      const userData: IData = {};
+    e.stopPropagation();
 
-      if (name) Object.assign(userData, { name: name });
-      if (profileImage) Object.assign(userData, { profileImage: profileImage });
-      if (bio) Object.assign(userData, { bio: bio });
+    const userData: IData = {};
 
-      const formData = new FormData();
+    if (name) Object.assign(userData, { name: name });
+    if (profileImage) Object.assign(userData, { profileImage: profileImage });
+    if (bio) Object.assign(userData, { bio: bio });
 
-      const userFormData = Object.keys(userData).forEach((key) => {
-        formData.append(key, userData[key as keyof typeof formData.set]);
-      });
+    const formData = new FormData();
 
-      formData.append("user", userFormData as keyof typeof formData.set);
+    const userFormData = Object.keys(userData).forEach((key) => {
+      formData.append(key, userData[key as keyof typeof formData.set]);
+    });
 
-      await dispatch(updateProfile(formData as IData));
+    formData.append("user", userFormData as keyof typeof formData.set);
 
-      setTimeout(() => {
-        dispatch(resetMessage());
-      }, 2000);
-    }
+    await dispatch(updateProfile(formData as IData));
+
+    setTimeout(() => {
+      dispatch(resetMessage());
+    }, 2000);
   };
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
