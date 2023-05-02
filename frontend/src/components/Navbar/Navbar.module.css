@@ -8,7 +8,6 @@ header {
   background-color: var(--bg);
   position: sticky;
   top: 0;
-  transition: 0.3s;
   z-index: 1;
 }
 
