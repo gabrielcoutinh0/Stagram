@@ -4,7 +4,7 @@ a,
   text-decoration: none;
 }
 
-header {
+.headerNavbar {
   background-color: var(--bg);
   position: sticky;
   top: 0;

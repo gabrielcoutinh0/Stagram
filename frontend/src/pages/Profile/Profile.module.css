@@ -100,7 +100,8 @@
 
 .articleProfile {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(115px, 260px));
+  grid-auto-rows: 1fr;
   gap: 4px;
   width: 100%;
   padding-top: 30px;
@@ -151,6 +152,16 @@
   .picture > img {
     width: 77px;
     height: 77px;
+  }
+
+  .articleProfile > .photos {
+    min-width: 115px;
+    min-height: 115px;
+    width: 100%;
+  }
+
+  .articleProfile {
+    grid-auto-rows: 0.5fr;
   }
 
   .wrapperUsernameAndEdit {

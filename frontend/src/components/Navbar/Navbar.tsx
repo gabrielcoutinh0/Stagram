@@ -24,7 +24,7 @@ export function Navbar({ theme, setTheme }: themeType) {
   return (
     <>
       {auth && (
-        <header>
+        <header className={styles.headerNavbar}>
           <div className={styles.container}>
             <div
               className="logo"
