@@ -5,7 +5,7 @@ export const uploads = import.meta.env.VITE_UPLOADS_SERVER;
 
 export function requestConfig(
   method: string,
-  data?: IData | IPhoto,
+  data?: IData | IPhoto | null,
   token: string | null = null,
   image?: boolean
 ) {
@@ -13,7 +13,8 @@ export function requestConfig(
 
   config = {
     method,
-    body: image ? (data as BodyInit) : JSON.stringify(data) || null,
+    body:
+      data === null ? null : image ? (data as BodyInit) : JSON.stringify(data),
     headers:
       token || method === "DELETE" || data === null
         ? { Authorization: `Bearer ${token}` }
