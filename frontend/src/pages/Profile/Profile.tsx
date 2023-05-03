@@ -7,11 +7,18 @@ import { useSelector } from "react-redux";
 import { getUserDetails } from "../../slices/userSlice";
 import { uploads } from "../../utils/config";
 import { Link } from "react-router-dom";
-import { IData } from "../../utils/type";
+import { getAllPhotos, getUserPhotos } from "../../slices/photoSlice";
 
 export function Profile() {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
+
+  const {
+    photos,
+    loading: loadingPhoto,
+    message: messagePhoto,
+    error: errorPhoto,
+  } = useSelector((state: RootState) => state.photo);
 
   const { user, loading, error } = useSelector(
     (state: RootState) => state.user
@@ -20,6 +27,7 @@ export function Profile() {
 
   useEffect(() => {
     dispatch(getUserDetails(id as string));
+    dispatch(getAllPhotos());
   }, [dispatch, id]);
 
   if (loading) return <p>Carregando...</p>;
@@ -81,6 +89,23 @@ export function Profile() {
             </div>
           </div>
           <div className={styles.separator} />
+          {userAuth ? (
+            <article className={styles.articleProfile}>
+              {photos.map(
+                (photo) =>
+                  photo["username"] === user?._id && (
+                    <div key={photo["_id"]} className={styles.photos}>
+                      <img src={`${uploads}/photos/${photo["image"]}`} />
+                    </div>
+                  )
+              )}
+            </article>
+          ) : (
+            <p className={styles.notLoggin}>
+              <Link to="/login">Acesse sua conta</Link> para visualizar as fotos
+              de {user?.username} ou <Link to="/register">crie uma.</Link>
+            </p>
+          )}
         </>
       )}
     </div>
