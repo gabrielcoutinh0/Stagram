@@ -1,18 +1,19 @@
 import styles from "./ModalAddPhoto.module.css";
 import { useDispatch } from "react-redux";
 import { useState, FormEvent, ChangeEvent, useEffect } from "react";
-import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
 import { useSelector } from "react-redux";
 import { Button } from "../Button/Button";
 import { IPhoto } from "../../utils/type";
 import { publishPhoto, resetMessage } from "../../slices/photoSlice";
+import { resizeImage } from "../../utils/resizeImage";
 
 export const ModalAddPhoto = ({ modal }: any) => {
   const [params, setParams] = useSearchParams();
   const [caption, setCaption] = useState<string>("");
-  const [image, setImage] = useState<string | File>("");
-  const [previewImage, setPreviewImage] = useState<File | null>();
+  const [image, setImage] = useState<File | null>();
+  const [previewImage, setPreviewImage] = useState<File | null | Blob>();
 
   const navigate = useNavigate();
 
@@ -20,7 +21,6 @@ export const ModalAddPhoto = ({ modal }: any) => {
     (state: RootState) => state.user
   );
   const {
-    photos,
     loading: loadingPhoto,
     message: messagePhoto,
     error: errorPhoto,
@@ -52,9 +52,13 @@ export const ModalAddPhoto = ({ modal }: any) => {
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files !== null) {
-      const image = e.target.files[0];
-      setPreviewImage(image);
-      setImage(image);
+      console.log(e.target.files[0]);
+
+      resizeImage(e.target.files[0], 468, 468).then((blob) => {
+        console.log(blob);
+        setPreviewImage(blob as unknown as File);
+        setImage(blob as unknown as File);
+      });
     }
   };
 
@@ -62,11 +66,9 @@ export const ModalAddPhoto = ({ modal }: any) => {
     if (!params.get("addPhoto")) {
       setCaption("");
       setPreviewImage(null);
+      setImage(null);
     }
   }, [setParams]);
-
-  console.log(errorPhoto);
-  console.log(messagePhoto);
 
   return (
     <modal.Frame
@@ -99,7 +101,7 @@ export const ModalAddPhoto = ({ modal }: any) => {
               <>
                 <div>
                   <div className={styles.previewPhoto}>
-                    <img src={URL.createObjectURL(previewImage!)} />
+                    <img src={URL.createObjectURL(previewImage)} />
                   </div>
                   <div className={styles.textAreaWrapper}>
                     <label>
