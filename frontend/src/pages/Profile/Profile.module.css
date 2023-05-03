@@ -98,6 +98,27 @@
   width: 100%;
 }
 
+.notProfile {
+  text-align: center;
+}
+
+.notProfile > span:first-child {
+  font-size: 24px;
+}
+
+.notProfile > p:last-child {
+  padding-top: 30px;
+  font-size: 14px;
+}
+
+.notProfile > p > a {
+  color: var(--btnPrimary);
+}
+
+.notProfile > p > a:hover {
+  color: var(--btnPrimaryHover);
+}
+
 @media (max-width: 640px) {
   .headerProfile {
     margin-bottom: 16px;
