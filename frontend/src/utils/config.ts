@@ -1,18 +1,19 @@
-import { IData } from "./type";
+import { IData, IPhoto } from "./type";
 
 export const api = import.meta.env.VITE_SERVER_ENDPOINT;
 export const uploads = import.meta.env.VITE_UPLOADS_SERVER;
 
 export function requestConfig(
   method: string,
-  data?: IData,
-  token: string | null = null
+  data?: IData | IPhoto,
+  token: string | null = null,
+  image?: boolean
 ) {
   let config: RequestInit;
 
   config = {
     method,
-    body: method === "PUT" ? (data as BodyInit) : JSON.stringify(data) || null,
+    body: image ? (data as BodyInit) : JSON.stringify(data) || null,
     headers:
       token || method === "DELETE" || data === null
         ? { Authorization: `Bearer ${token}` }
