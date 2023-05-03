@@ -1,6 +1,6 @@
 import styles from "./Navbar.module.css";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import { VscDiffAdded } from "react-icons/vsc";
 import { IconContext } from "react-icons/lib";
@@ -10,11 +10,16 @@ import { RootState } from "../../store";
 import { Dropdown } from "../Dropdown/Dropdown";
 import { themeType } from "../../utils/type";
 import { uploads } from "../../utils/config";
+import { ModalAddPhoto } from "../ModalAddPhoto/ModalAddPhoto";
+import { Modal } from "../Modal/Modal";
 
 export function Navbar({ theme, setTheme }: themeType) {
-  const { user } = useSelector((state: RootState) => state.auth);
+  const [params, setParams] = useSearchParams();
 
+  const { user } = useSelector((state: RootState) => state.auth);
   const { auth } = useAuth();
+
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -54,12 +59,14 @@ export function Navbar({ theme, setTheme }: themeType) {
                     <span className={styles.tooltiptext}>Home</span>
                   </div>
                 </Link>
-                <Link to="/">
-                  <div className={styles.tooltip}>
-                    <VscDiffAdded />
-                    <span className={styles.tooltiptext}>Add Photo</span>
-                  </div>
-                </Link>
+                <div
+                  className={styles.tooltip}
+                  role="button"
+                  onClick={() => setParams({ ...params, addPhoto: "true" })}
+                >
+                  <VscDiffAdded />
+                  <span className={styles.tooltiptext}>Add Photo</span>
+                </div>
                 <Link to={`/${user?.username}`}>
                   <div className={styles.tooltip}>
                     <div className={styles.perfil}>
@@ -82,6 +89,7 @@ export function Navbar({ theme, setTheme }: themeType) {
               <Dropdown theme={theme} setTheme={setTheme} />
             </nav>
           </div>
+          <ModalAddPhoto modal={Modal} />
           <div className={styles.separator} />
         </header>
       )}

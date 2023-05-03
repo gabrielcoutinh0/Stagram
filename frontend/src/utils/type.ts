@@ -16,3 +16,8 @@ export type themeType = {
   theme: string;
   setTheme: React.Dispatch<React.SetStateAction<string>>;
 };
+
+export interface IPhoto {
+  title: string;
+  image: string | File;
+}
