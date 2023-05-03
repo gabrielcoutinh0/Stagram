@@ -97,7 +97,7 @@ export const userSlice = createSlice({
       .addCase(getUserDetails.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.success = true;
-        state.error = payload ? payload.errors == "Acesso negado!" : null;
+        state.error = payload.errors ? payload : null;
         state.user = payload;
       });
   },
