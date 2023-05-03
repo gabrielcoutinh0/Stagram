@@ -52,10 +52,7 @@ export const ModalAddPhoto = ({ modal }: any) => {
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files !== null) {
-      console.log(e.target.files[0]);
-
       resizeImage(e.target.files[0], 468, 468).then((blob) => {
-        console.log(blob);
         setPreviewImage(blob as unknown as File);
         setImage(blob as unknown as File);
       });
