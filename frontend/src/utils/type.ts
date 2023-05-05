@@ -18,6 +18,7 @@ export type themeType = {
 };
 
 export interface IPhoto {
+  _id?: string;
   title: string;
   image: File | null | undefined;
 }
