@@ -6,6 +6,7 @@ import {
   getCurrentUser,
   update,
   getUserById,
+  getUserByUsername,
 } from "../controllers/UserController";
 import {
   userCreateValidation,
@@ -27,4 +28,5 @@ router.put(
   imageUpload.single("profileImage"),
   update
 );
-router.get("/:id", getUserById);
+router.get("/:id", getUserByUsername);
+router.get("/id/:id", getUserById);
