@@ -6,8 +6,9 @@ import { useSearchParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
 import { useSelector } from "react-redux";
 import { Button } from "../Button/Button";
-import { resetMessage, updateProfile } from "../../slices/userSlice";
+import { updateProfile } from "../../slices/userSlice";
 import { IData } from "../../utils/type";
+import { useResetMessage } from "../../hooks/useResetMessage";
 
 export const ModalPassword = ({ modal }: any) => {
   const [params, setParams] = useSearchParams();
@@ -21,6 +22,7 @@ export const ModalPassword = ({ modal }: any) => {
     (state: RootState) => state.user
   );
   const dispatch = useDispatch<AppDispatch>();
+  const resetMessage = useResetMessage(dispatch);
 
   const handleSubmitPassword = async (e: FormEvent<HTMLFormElement>) => {
     setErrorPassword(null);
@@ -53,9 +55,7 @@ export const ModalPassword = ({ modal }: any) => {
     setNewPassword("");
     setNewPasswordConfirmation("");
 
-    setTimeout(() => {
-      dispatch(resetMessage());
-    }, 2000);
+    resetMessage();
   };
 
   return (

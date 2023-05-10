@@ -8,6 +8,7 @@ import { Button } from "../Button/Button";
 import { IPhoto } from "../../utils/type";
 import { publishPhoto, resetMessage } from "../../slices/photoSlice";
 import { resizeImage } from "../../utils/resizeImage";
+import { useResetMessage } from "../../hooks/useResetMessage";
 
 export const ModalAddPhoto = ({ modal }: any) => {
   const [params, setParams] = useSearchParams();
@@ -16,6 +17,8 @@ export const ModalAddPhoto = ({ modal }: any) => {
   const [previewImage, setPreviewImage] = useState<File | null | Blob>();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const resetMessage = useResetMessage(dispatch);
 
   const { error, loading, message } = useSelector(
     (state: RootState) => state.user
@@ -25,7 +28,8 @@ export const ModalAddPhoto = ({ modal }: any) => {
     message: messagePhoto,
     error: errorPhoto,
   } = useSelector((state: RootState) => state.photo);
-  const dispatch = useDispatch<AppDispatch>();
+
+  console.log(messagePhoto);
 
   const handleSubmitPhoto = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,11 +47,7 @@ export const ModalAddPhoto = ({ modal }: any) => {
     formData.append("photo", photoFormData as keyof typeof formData.set);
 
     dispatch(publishPhoto(formData as unknown as IPhoto));
-
-    setTimeout(() => {
-      dispatch(resetMessage());
-      navigate("/");
-    }, 2000);
+    resetMessage();
   };
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {

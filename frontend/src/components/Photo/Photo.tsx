@@ -9,13 +9,9 @@ import { getTimeStamp } from "../../utils/getTimeStamp";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { useDispatch } from "react-redux";
-import {
-  deletePhoto,
-  getAllPhotos,
-  getPhotoById,
-  likePhoto,
-} from "../../slices/photoSlice";
+import { deletePhoto, getAllPhotos, likePhoto } from "../../slices/photoSlice";
 import { useEffect } from "react";
+import { useResetMessage } from "../../hooks/useResetMessage";
 
 interface IPhotoProps {
   photo: IPhoto;
@@ -27,14 +23,17 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
   const { user: userAuth } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const resetMessage = useResetMessage(dispatch);
 
   const handleDelete = (id: string) => {
     dispatch(deletePhoto(id));
     navigate("/");
+    resetMessage();
   };
 
   const handleLike = (photo: IPhoto) => {
     dispatch(likePhoto(photo._id as string));
+    resetMessage();
   };
 
   useEffect(() => {

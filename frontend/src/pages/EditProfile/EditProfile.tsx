@@ -5,15 +5,17 @@ import { Button } from "../../components/Button/Button";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import { profile, resetMessage, updateProfile } from "../../slices/userSlice";
+import { profile, updateProfile } from "../../slices/userSlice";
 import { uploads } from "../../utils/config";
 import { IData } from "../../utils/type";
 import { useSearchParams } from "react-router-dom";
 import { Modal } from "../../components/Modal/Modal";
 import { ModalPassword } from "../../components/ModalPassword/ModalPassword";
+import { useResetMessage } from "../../hooks/useResetMessage";
 
 export function EditProfile() {
   const dispatch = useDispatch<AppDispatch>();
+  const resetMessage = useResetMessage(dispatch);
   const { user, message, error, loading } = useSelector(
     (state: RootState) => state.user
   );
@@ -47,9 +49,7 @@ export function EditProfile() {
 
     await dispatch(updateProfile(formData as IData));
 
-    setTimeout(() => {
-      dispatch(resetMessage());
-    }, 2000);
+    resetMessage();
   };
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {

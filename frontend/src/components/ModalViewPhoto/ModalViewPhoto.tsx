@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { uploads } from "../../utils/config";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
-import { FaRegComment, FaRegHeart, FaHeart } from "react-icons/fa";
 import { getPhotoById } from "../../slices/photoSlice";
 import { Link } from "react-router-dom";
 import { Photo } from "../Photo/Photo";
