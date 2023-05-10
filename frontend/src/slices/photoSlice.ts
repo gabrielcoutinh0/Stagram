@@ -181,8 +181,6 @@ export const photoSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.error = null;
-        console.log("PAYLOAD: ", payload);
-        console.log("STATE: ", state);
         if (state?.photo?.likes) {
           state.photo.likes.includes(payload.userId)
             ? pull(state.photo.likes, payload.userId)

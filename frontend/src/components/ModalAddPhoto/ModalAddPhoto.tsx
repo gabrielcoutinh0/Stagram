@@ -29,8 +29,6 @@ export const ModalAddPhoto = ({ modal }: any) => {
     error: errorPhoto,
   } = useSelector((state: RootState) => state.photo);
 
-  console.log(messagePhoto);
-
   const handleSubmitPhoto = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

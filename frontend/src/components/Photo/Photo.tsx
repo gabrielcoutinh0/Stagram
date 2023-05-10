@@ -40,8 +40,6 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
     dispatch(getAllPhotos);
   }, [dispatch]);
 
-  console.log(photo.likes);
-
   return (
     <article key={photo._id}>
       <div>
