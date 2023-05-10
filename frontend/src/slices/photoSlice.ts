@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { photoService } from "../services/photoService";
 import { IPhoto } from "../utils/type";
+import { pull } from "../utils/pull";
 
 interface photoState {
   photos: [];
@@ -85,6 +86,20 @@ export const deletePhoto = createAsyncThunk(
   }
 );
 
+export const likePhoto = createAsyncThunk(
+  "photo/likePhoto",
+  async (id: string, thunkAPI) => {
+    const state: any = thunkAPI.getState();
+    const token = state.auth.user.token;
+
+    const data = await photoService.likePhoto(id, token);
+
+    if (data.errors) return thunkAPI.rejectWithValue(data.error[0]);
+
+    return data;
+  }
+);
+
 export const photoSlice = createSlice({
   name: "photo",
   initialState,
@@ -155,15 +170,36 @@ export const photoSlice = createSlice({
         state.loading = false;
         state.success = true;
         state.error = null;
-        state.photos = payload.filter((photo: IPhoto) => {
-          return photo._id !== payload.id;
-        });
         state.message = payload.message;
       })
       .addCase(deletePhoto.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
         state.photo = null;
+      })
+      .addCase(likePhoto.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        console.log("PAYLOAD: ", payload);
+        console.log("STATE: ", state);
+        if (state?.photo?.likes) {
+          state.photo.likes.includes(payload.userId)
+            ? pull(state.photo.likes, payload.userId)
+            : state.photo.likes.push(payload?.userId);
+        }
+
+        state.photos.map((photo: IPhoto) => {
+          if (photo._id === payload.photoId) {
+            return photo.likes?.push(payload.userId);
+          }
+          return photo;
+        });
+        state.message = payload.message;
+      })
+      .addCase(likePhoto.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
       });
   },
 });
