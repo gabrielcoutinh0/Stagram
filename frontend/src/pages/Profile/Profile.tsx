@@ -7,14 +7,14 @@ import { useSelector } from "react-redux";
 import { getUserDetails } from "../../slices/userSlice";
 import { uploads } from "../../utils/config";
 import { Link } from "react-router-dom";
-import { getAllPhotos, getUserPhotos } from "../../slices/photoSlice";
+import { getAllPhotos } from "../../slices/photoSlice";
 import { ModalViewPhoto } from "../../components/ModalViewPhoto/ModalViewPhoto";
 import { Modal } from "../../components/Modal/Modal";
 
 export function Profile() {
   const { id } = useParams();
-  const [params, setParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
+  const [params, setParams] = useSearchParams();
 
   const {
     photos,
@@ -103,7 +103,6 @@ export function Profile() {
                       onClick={() =>
                         setParams({ ...params, photo: photo["_id"] })
                       }
-                      role="button"
                     >
                       <img src={`${uploads}/photos/${photo["image"]}`} />
                     </div>
