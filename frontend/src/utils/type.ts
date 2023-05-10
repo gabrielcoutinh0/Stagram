@@ -22,6 +22,7 @@ export interface IPhoto {
   username?: string;
   image?: File | null | undefined;
   title?: string;
-  likes?: [];
+  likes?: string[];
   comments?: [];
+  createdAt?: string;
 }
