@@ -23,13 +23,13 @@ export interface IPhoto {
   image?: File | null | undefined;
   title?: string;
   likes?: string[];
-  comments?: [];
+  comments?: [IComment];
   createdAt?: string;
 }
 
 export interface IComment {
   _id?: string;
   username?: string;
-  comment?: string;
+  comment: string;
   createdAt?: string;
 }
