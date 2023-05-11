@@ -149,3 +149,17 @@ export const getUserById = async (req: Request, res: Response) => {
     res.status(404).json({ errors: ["ID não encontrado."] });
   }
 };
+
+export const getAllUser = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find({})
+      .sort([["createdAt", -1]])
+      .exec();
+
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(200).json({
+      errors: "Houve um problema, por favor tente novamente mais tarde.",
+    });
+  }
+};

@@ -7,6 +7,7 @@ import {
   update,
   getUserById,
   getUserByUsername,
+  getAllUser,
 } from "../controllers/UserController";
 import {
   userCreateValidation,
@@ -30,3 +31,4 @@ router.put(
 );
 router.get("/:id", getUserByUsername);
 router.get("/id/:id", getUserById);
+router.get("/", getAllUser);
