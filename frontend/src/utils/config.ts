@@ -16,7 +16,15 @@ export function requestConfig(
     body:
       data === null ? null : image ? (data as BodyInit) : JSON.stringify(data),
     headers:
-      token || method === "DELETE" || data === null
+      method === "PUT" ||
+      (token && !image) ||
+      method === "DELETE" ||
+      data === null
+        ? {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          }
+        : image
         ? { Authorization: `Bearer ${token}` }
         : { "Content-Type": "application/json" },
   };
