@@ -26,3 +26,10 @@ export interface IPhoto {
   comments?: [];
   createdAt?: string;
 }
+
+export interface IComment {
+  _id?: string;
+  username?: string;
+  comment?: string;
+  createdAt?: string;
+}
