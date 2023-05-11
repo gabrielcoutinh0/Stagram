@@ -1,5 +1,5 @@
 import { api, requestConfig } from "../utils/config";
-import { IPhoto } from "../utils/type";
+import { IComment, IPhoto } from "../utils/type";
 
 const publishPhoto = async (data: IPhoto, token: string) => {
   const config = requestConfig("POST", data, token, true);
@@ -85,6 +85,20 @@ const likePhoto = async (id: string, token: string) => {
   }
 };
 
+const commentPhoto = async (data: IComment, id: string, token: string) => {
+  const config = requestConfig("PUT", data, token);
+
+  try {
+    const res = await fetch(api + "/photos/comment/" + id, config)
+      .then((res) => res.json())
+      .catch((err) => err);
+
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const photoService = {
   publishPhoto,
   getUserPhotos,
@@ -92,4 +106,5 @@ export const photoService = {
   getPhotoById,
   deletePhoto,
   likePhoto,
+  commentPhoto,
 };

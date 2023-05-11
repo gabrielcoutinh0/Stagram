@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { photoService } from "../services/photoService";
-import { IPhoto } from "../utils/type";
+import { IComment, IPhoto } from "../utils/type";
 import { pull } from "../utils/pull";
 
 interface photoState {
@@ -93,6 +93,24 @@ export const likePhoto = createAsyncThunk(
     const token = state.auth.user.token;
 
     const data = await photoService.likePhoto(id, token);
+
+    if (data.errors) return thunkAPI.rejectWithValue(data.error[0]);
+
+    return data;
+  }
+);
+
+export const commentPhoto = createAsyncThunk(
+  "photo/commentPhoto",
+  async (commentData: IComment, thunkAPI) => {
+    const state: any = thunkAPI.getState();
+    const token = state.auth.user.token;
+
+    const data = await photoService.commentPhoto(
+      { comment: commentData.comment },
+      commentData._id as string,
+      token
+    );
 
     if (data.errors) return thunkAPI.rejectWithValue(data.error[0]);
 
@@ -196,6 +214,17 @@ export const photoSlice = createSlice({
         state.message = payload.message;
       })
       .addCase(likePhoto.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      })
+      .addCase(commentPhoto.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.photo?.comments?.push(payload.comment);
+        state.message = payload.message;
+      })
+      .addCase(commentPhoto.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
       });
