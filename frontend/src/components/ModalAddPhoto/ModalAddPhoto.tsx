@@ -1,12 +1,12 @@
 import styles from "./ModalAddPhoto.module.css";
 import { useDispatch } from "react-redux";
 import { useState, FormEvent, ChangeEvent, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
 import { useSelector } from "react-redux";
 import { Button } from "../Button/Button";
 import { IPhoto } from "../../utils/type";
-import { publishPhoto, resetMessage } from "../../slices/photoSlice";
+import { getAllPhotos, publishPhoto } from "../../slices/photoSlice";
 import { resizeImage } from "../../utils/resizeImage";
 import { useResetMessage } from "../../hooks/useResetMessage";
 
@@ -16,7 +16,6 @@ export const ModalAddPhoto = ({ modal }: any) => {
   const [image, setImage] = useState<File | null>();
   const [previewImage, setPreviewImage] = useState<File | null | Blob>();
 
-  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const resetMessage = useResetMessage(dispatch);
 
@@ -46,6 +45,9 @@ export const ModalAddPhoto = ({ modal }: any) => {
 
     dispatch(publishPhoto(formData as unknown as IPhoto));
     resetMessage();
+    setPreviewImage(null);
+    setImage(null);
+    setCaption("");
   };
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +65,8 @@ export const ModalAddPhoto = ({ modal }: any) => {
       setPreviewImage(null);
       setImage(null);
     }
-  }, [setParams]);
+    dispatch(getAllPhotos());
+  }, [dispatch, setParams]);
 
   return (
     <modal.Frame
