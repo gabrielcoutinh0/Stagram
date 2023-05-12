@@ -16,7 +16,12 @@ body > #root > .App {
 }
 
 .invisible {
+  display: none;
   visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
 }
 
 .boxModal {
