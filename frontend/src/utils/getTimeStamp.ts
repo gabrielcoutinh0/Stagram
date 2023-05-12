@@ -8,7 +8,7 @@ export function getTimeStamp(date: string): string {
 
   let temp = "";
 
-  if (differenceSeconds <= 0) temp = `Agora`;
+  if (differenceSeconds <= 0 || Number.isNaN(differenceHours)) temp = `Agora`;
   else if (differenceSeconds >= 86400)
     temp = `${(differenceHours / 24).toFixed(0)} dias atrás`;
   else if (differenceSeconds >= 3600)
