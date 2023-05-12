@@ -170,7 +170,7 @@ export const commentPhoto = async (req: Request, res: Response) => {
 
   try {
     const userComment = {
-      username: user,
+      username: user?._id,
       comment,
       createdAt: Date.now(),
     };
@@ -199,15 +199,18 @@ export const deleteComment = async (req: Request, res: Response) => {
   const user = await User.findById(reqUser);
   const photo = await Photo.findById(photoId);
 
-  if (photo?.comments !== undefined)
-    for (let i = 0; i < photo?.comments.length; i++)
-      if (photo?.comments[i]?._id.equals(new Types.ObjectId(commentId)))
-        if (!photo?.comments[i]?.username.equals(new Types.ObjectId(user?._id)))
-          return res.status(200).json({
-            errors: "Desculpa, você não pode deletar esse comentário.",
-          });
-
   try {
+    if (photo?.comments !== undefined)
+      for (let i = 0; i < photo?.comments.length; i++) {
+        if (photo?.comments[i]?._id.equals(new Types.ObjectId(commentId)))
+          if (
+            !photo?.comments[i]?.username.equals(new Types.ObjectId(user?._id))
+          )
+            return res.status(200).json({
+              errors: "Desculpa, você não pode deletar esse comentário.",
+            });
+      }
+
     await Photo.findByIdAndUpdate(
       photo,
       { $pull: { comments: { _id: commentId } } },
