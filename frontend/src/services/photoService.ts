@@ -99,6 +99,27 @@ const commentPhoto = async (data: IComment, id: string, token: string) => {
   }
 };
 
+const deleteComment = async (
+  idPhoto: string,
+  idComment: string,
+  token: string
+) => {
+  const config = requestConfig("PUT", null, token);
+
+  try {
+    const res = await fetch(
+      api + "/photos/" + idPhoto + "/comment/" + idComment,
+      config
+    )
+      .then((res) => res.json())
+      .catch((err) => err);
+
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const photoService = {
   publishPhoto,
   getUserPhotos,
@@ -107,4 +128,5 @@ export const photoService = {
   deletePhoto,
   likePhoto,
   commentPhoto,
+  deleteComment,
 };
