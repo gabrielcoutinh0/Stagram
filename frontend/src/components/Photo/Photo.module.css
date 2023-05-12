@@ -77,3 +77,139 @@
   font-size: 13px;
   color: var(--txtGray);
 }
+
+.icons {
+  color: var(--txt);
+}
+
+.commentsWrapper {
+  margin: 8px;
+}
+
+.textAreaAndButton {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.textArea {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--bg);
+  color: var(--txt);
+  border: 0;
+  max-height: 80px;
+  width: 100%;
+  height: 18px;
+  resize: none;
+  margin: 8px 0;
+}
+
+.textArea:focus {
+  outline: none;
+}
+
+.textAreaAndButton > button {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--btnPrimary);
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.textAreaAndButton > button:hover {
+  color: var(--txt);
+}
+
+.textAreaAndButton > button:disabled {
+  color: #b3dbff;
+  cursor: auto;
+}
+
+.ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 180px;
+  height: 100%;
+  overflow-y: auto;
+  list-style-type: none;
+  margin: 0;
+  padding: 8px 0 0;
+}
+
+.ul > li,
+.usernameAndImage {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.usernameAndImage {
+  gap: 18px;
+}
+
+.imageUserComment {
+  display: block;
+  max-width: 32px;
+  max-height: 32px;
+}
+
+.imageUserComment > img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.commentAndEdit {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  width: 100%;
+}
+
+.commentAndusername > a {
+  font-weight: 700;
+  margin-right: 4px;
+  user-select: none;
+}
+
+.commentAndusername > a,
+.commentAndusername > span {
+  font-size: 14px;
+}
+
+.commentAndusername {
+  display: inline;
+}
+
+.commentAndTime {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.timeComment > span {
+  font-size: 11px;
+  color: var(--txtGray);
+}
+
+.delete {
+  cursor: pointer;
+}
+
+.notComment {
+  display: block;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 8px 0;
+}
+
+.notComment > p {
+  font-weight: 400;
+  font-size: 14px;
+  margin: 4px 0;
+}

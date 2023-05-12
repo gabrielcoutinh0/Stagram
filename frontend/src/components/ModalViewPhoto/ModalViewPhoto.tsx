@@ -2,7 +2,6 @@ import styles from "./ModalViewPhoto.module.css";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { useSelector } from "react-redux";
-import { uploads } from "../../utils/config";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getPhotoById } from "../../slices/photoSlice";
