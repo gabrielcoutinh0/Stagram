@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import { getAllPhotos } from "../../slices/photoSlice";
 import { ModalViewPhoto } from "../../components/ModalViewPhoto/ModalViewPhoto";
 import { Modal } from "../../components/Modal/Modal";
+import { IPhoto } from "../../utils/type";
+import { FaComment, FaHeart } from "react-icons/fa";
 
 export function Profile() {
   const { id } = useParams();
@@ -95,16 +97,24 @@ export function Profile() {
           {userAuth ? (
             <article className={styles.articleProfile}>
               {photos.map(
-                (photo) =>
-                  photo["username"] === user?._id && (
+                (photo: IPhoto) =>
+                  photo.username === user?._id && (
                     <div
-                      key={photo["_id"]}
+                      key={photo._id}
                       className={styles.photos}
-                      onClick={() =>
-                        setParams({ ...params, photo: photo["_id"] })
-                      }
+                      onClick={() => setParams({ ...params, photo: photo._id })}
+                      tabIndex={0}
+                      role="dialog"
                     >
-                      <img src={`${uploads}/photos/${photo["image"]}`} />
+                      <img src={`${uploads}/photos/${photo.image}`} />
+                      <div className={styles.overlay}>
+                        <span>
+                          <FaHeart /> {photo.likes?.length}
+                        </span>
+                        <span>
+                          <FaComment /> {photo.comments?.length}
+                        </span>
+                      </div>
                     </div>
                   )
               )}
