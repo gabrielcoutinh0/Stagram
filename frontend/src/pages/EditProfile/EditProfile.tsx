@@ -11,13 +11,18 @@ import { Button } from "../../components/Button/Button";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import { profile, updateProfile } from "../../slices/userSlice";
+import {
+  getUserDetailsById,
+  profile,
+  updateProfile,
+} from "../../slices/userSlice";
 import { uploads } from "../../utils/config";
 import { IData } from "../../utils/type";
 import { useSearchParams } from "react-router-dom";
 import { Modal } from "../../components/Modal/Modal";
 import { ModalPassword } from "../../components/ModalPassword/ModalPassword";
 import { useResetMessage } from "../../hooks/useResetMessage";
+import { resizeImage } from "../../utils/resizeImage";
 
 export function EditProfile() {
   const dispatch = useDispatch<AppDispatch>();
@@ -60,9 +65,10 @@ export function EditProfile() {
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files !== null) {
-      const image = e.target.files[0];
-      setPreviewImage(image);
-      setProfileImage(image);
+      resizeImage(e.target.files[0], 152, 152).then((blob) => {
+        setPreviewImage(blob as unknown as File);
+        setProfileImage(blob as unknown as File);
+      });
     }
   };
 
