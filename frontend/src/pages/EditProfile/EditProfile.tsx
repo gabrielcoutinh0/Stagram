@@ -4,6 +4,7 @@ import {
   FormEvent,
   ChangeEvent,
   KeyboardEvent,
+  MouseEvent,
 } from "react";
 import styles from "./EditProfile.module.css";
 import Input from "../../components/Input/Input";
@@ -11,11 +12,7 @@ import { Button } from "../../components/Button/Button";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import {
-  getUserDetailsById,
-  profile,
-  updateProfile,
-} from "../../slices/userSlice";
+import { profile, updateProfile } from "../../slices/userSlice";
 import { uploads } from "../../utils/config";
 import { IData } from "../../utils/type";
 import { useSearchParams } from "react-router-dom";
@@ -72,12 +69,15 @@ export function EditProfile() {
     }
   };
 
-  const handleModalPassword = () => {
+  const handleModalPassword = (
+    e: MouseEvent<HTMLSpanElement> | KeyboardEvent<HTMLSpanElement>
+  ) => {
+    e.preventDefault();
     setParams({ ...params, changePassword: "true" });
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLSpanElement>) => {
-    if (e.key === "Enter" || e.code === "Space") handleModalPassword();
+    if (e.key === "Enter" || e.code === "Space") handleModalPassword(e);
   };
 
   useEffect(() => {
@@ -179,7 +179,7 @@ export function EditProfile() {
               Enviar
             </Button>
             <span
-              onKeyDown={handleKeyDown}
+              onKeyDown={(e) => handleKeyDown(e)}
               tabIndex={0}
               role="button"
               onClick={handleModalPassword}
