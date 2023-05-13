@@ -77,6 +77,7 @@ const Frame = ({
           className={styles.btnClose}
           onClick={() => onClose()}
           title="Fechar"
+          tabIndex={1}
         >
           <span>&times;</span>
         </button>

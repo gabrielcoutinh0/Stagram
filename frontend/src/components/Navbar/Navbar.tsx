@@ -1,5 +1,5 @@
 import styles from "./Navbar.module.css";
-import { useEffect, useState } from "react";
+import { KeyboardEvent, MouseEvent, useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import { VscDiffAdded } from "react-icons/vsc";
@@ -19,7 +19,16 @@ export function Navbar({ theme, setTheme }: themeType) {
   const { user } = useSelector((state: RootState) => state.auth);
   const { auth } = useAuth();
 
-  useEffect(() => {}, []);
+  const handleModalAddPhoto = (
+    e: MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement>
+  ) => {
+    e.preventDefault();
+    setParams({ ...params, addPhoto: "true" });
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.code === "Enter" || e.code === "Space") handleModalAddPhoto(e);
+  };
 
   return (
     <>
@@ -61,8 +70,10 @@ export function Navbar({ theme, setTheme }: themeType) {
                 </Link>
                 <div
                   className={styles.tooltip}
+                  tabIndex={0}
                   role="button"
-                  onClick={() => setParams({ ...params, addPhoto: "true" })}
+                  onKeyDown={(e) => handleKeyDown(e)}
+                  onClick={handleModalAddPhoto}
                 >
                   <VscDiffAdded />
                   <span className={styles.tooltiptext}>Add Photo</span>

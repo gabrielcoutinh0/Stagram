@@ -2,7 +2,7 @@ import styles from "./Photo.module.css";
 import { Link, useSearchParams } from "react-router-dom";
 import { uploads } from "../../utils/config";
 import { FaRegComment, FaRegHeart, FaHeart } from "react-icons/fa";
-import { RiChatDeleteLine } from "react-icons/ri";
+import { MdDeleteForever } from "react-icons/md";
 import { BsPencilSquare, BsTrash } from "react-icons/bs";
 import { IconContext } from "react-icons/lib";
 import { IComment, IData, IPhoto } from "../../utils/type";
@@ -18,7 +18,7 @@ import {
   getPhotoById,
   likePhoto,
 } from "../../slices/photoSlice";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, KeyboardEvent, useEffect, useState } from "react";
 import { useResetMessage } from "../../hooks/useResetMessage";
 import { getAllUsers } from "../../slices/usersSlices";
 
@@ -47,9 +47,23 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
     }
   };
 
+  const handleKeyDownDeletePhoto = (
+    e: KeyboardEvent<SVGElement>,
+    id: string
+  ) => {
+    if (e.key === "Enter" || e.code === "Space") handleDelete(id);
+  };
+
   const handleLike = (photo: IPhoto) => {
     dispatch(likePhoto(photo._id as string));
     resetMessage();
+  };
+
+  const handleKeyDownLike = (
+    e: KeyboardEvent<HTMLDivElement>,
+    photo: IPhoto
+  ) => {
+    if (e.key === "Enter" || e.code === "Space") handleLike(photo);
   };
 
   const handleDeleteComment = (photo: IPhoto, comment: IComment) => {
@@ -66,6 +80,15 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
       dispatch(deleteComment(ids));
       dispatch(getPhotoById(photo._id as string));
     }
+  };
+
+  const handleKeyDownDeleteComment = (
+    e: KeyboardEvent<HTMLDivElement>,
+    photo: IPhoto,
+    comment: IComment
+  ) => {
+    if (e.key === "Enter" || e.code === "Space")
+      handleDeleteComment(photo, comment);
   };
 
   const handleComment = (e: FormEvent<HTMLFormElement>) => {
@@ -92,7 +115,7 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
     <article key={photo?._id}>
       <div style={{ maxWidth: "468px" }}>
         <header className={styles.headerPhoto}>
-          <Link to={`/${user?.username}`}>
+          <Link to={`/${user?.username}`} tabIndex={0}>
             <div className={styles.userPostPhoto}>
               <img
                 src={`${uploads}/users/${user?.profileImage}`}
@@ -100,7 +123,11 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
               />
             </div>
           </Link>
-          <Link to={`/${user?.username}`} className={styles.username}>
+          <Link
+            to={`/${user?.username}`}
+            className={styles.username}
+            tabIndex={0}
+          >
             {user?.username}
           </Link>
           <span className={styles.dot}>•</span>
@@ -115,9 +142,11 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
           <div className={styles.likesAndComments}>
             <div
               className={styles.likes}
+              onKeyDown={(e) => handleKeyDownLike(e, photo as IPhoto)}
               onClick={() => handleLike(photo as IPhoto)}
               role="button"
               tabIndex={0}
+              aria-expanded="true"
             >
               {photo.likes && photo.likes?.includes(userAuth!._id!) ? (
                 <IconContext.Provider value={{ color: "red", size: "24" }}>
@@ -148,6 +177,9 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
               >
                 <BsPencilSquare />
                 <BsTrash
+                  onKeyDown={(e) =>
+                    handleKeyDownDeletePhoto(e, photo._id as string)
+                  }
                   onClick={() => handleDelete(photo._id as string)}
                   role="button"
                   tabIndex={0}
@@ -157,7 +189,11 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
           )}
         </div>
         <div className={styles.userAndLegend}>
-          <Link to={`/${user?.username}`} className={styles.username}>
+          <Link
+            to={`/${user?.username}`}
+            className={styles.username}
+            tabIndex={0}
+          >
             {user?.username}
           </Link>
           <h3>{photo.title}</h3>
@@ -188,6 +224,7 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
                         <Link
                           to={`/${filteredUser.username}`}
                           className={styles.imageUserComment}
+                          tabIndex={0}
                         >
                           <img
                             src={`${uploads}/users/${filteredUser?.profileImage}`}
@@ -197,16 +234,27 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
                         <div className={styles.commentAndTime}>
                           <div className={styles.commentAndEdit}>
                             <div className={styles.commentAndusername}>
-                              <Link to={`/${filteredUser.username}`}>
+                              <Link
+                                to={`/${filteredUser.username}`}
+                                tabIndex={0}
+                              >
                                 {filteredUser.username}
                               </Link>
                               <span>{comment.comment}</span>
                             </div>
                             {comment.username === userAuth?._id && (
                               <div
+                                tabIndex={0}
                                 className={styles.delete}
                                 role="button"
                                 aria-label="Apagar comentário"
+                                onKeyDown={(e) =>
+                                  handleKeyDownDeleteComment(
+                                    e,
+                                    photo as IPhoto,
+                                    comment as IComment
+                                  )
+                                }
                                 onClick={() =>
                                   handleDeleteComment(
                                     photo as IPhoto,
@@ -217,7 +265,7 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
                                 <IconContext.Provider
                                   value={{ color: "#fe6464", size: "18" }}
                                 >
-                                  <RiChatDeleteLine />
+                                  <MdDeleteForever />
                                 </IconContext.Provider>
                               </div>
                             )}

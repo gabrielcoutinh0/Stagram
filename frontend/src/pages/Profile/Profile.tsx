@@ -1,6 +1,6 @@
 import { useParams, useSearchParams } from "react-router-dom";
 import styles from "./Profile.module.css";
-import { useEffect } from "react";
+import { KeyboardEvent, MouseEvent, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { useSelector } from "react-redux";
@@ -29,6 +29,18 @@ export function Profile() {
     (state: RootState) => state.user
   );
   const { user: userAuth } = useSelector((state: RootState) => state.auth);
+
+  const handleModalPhoto = (
+    e: MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement>,
+    id: string
+  ) => {
+    e.preventDefault();
+    setParams({ ...params, photo: id });
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>, id: string) => {
+    if (e.key === "Enter" || e.code === "Space") handleModalPhoto(e, id);
+  };
 
   useEffect(() => {
     dispatch(getUserDetails(id as string));
@@ -102,7 +114,8 @@ export function Profile() {
                     <div
                       key={photo._id}
                       className={styles.photos}
-                      onClick={() => setParams({ ...params, photo: photo._id })}
+                      onKeyDown={(e) => handleKeyDown(e, photo._id as string)}
+                      onClick={(e) => handleModalPhoto(e, photo._id as string)}
                       tabIndex={0}
                       role="dialog"
                     >

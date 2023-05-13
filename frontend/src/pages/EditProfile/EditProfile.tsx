@@ -1,4 +1,10 @@
-import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import {
+  useState,
+  useEffect,
+  FormEvent,
+  ChangeEvent,
+  KeyboardEvent,
+} from "react";
 import styles from "./EditProfile.module.css";
 import Input from "../../components/Input/Input";
 import { Button } from "../../components/Button/Button";
@@ -58,6 +64,14 @@ export function EditProfile() {
       setPreviewImage(image);
       setProfileImage(image);
     }
+  };
+
+  const handleModalPassword = () => {
+    setParams({ ...params, changePassword: "true" });
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLSpanElement>) => {
+    if (e.key === "Enter" || e.code === "Space") handleModalPassword();
   };
 
   useEffect(() => {
@@ -159,8 +173,10 @@ export function EditProfile() {
               Enviar
             </Button>
             <span
+              onKeyDown={handleKeyDown}
+              tabIndex={0}
               role="button"
-              onClick={() => setParams({ ...params, changePassword: "true" })}
+              onClick={handleModalPassword}
             >
               Mudar senhar
             </span>

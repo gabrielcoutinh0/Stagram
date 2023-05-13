@@ -41,6 +41,7 @@ export const Dropdown = ({ theme, setTheme }: themeType) => {
       </button>
       <div className={styles.menu}>
         <button
+          tabIndex={0}
           aria-label={`Change theme to ${themeMode} mode`}
           role="switch"
           onClick={() => setTheme(themeMode)}
@@ -49,7 +50,7 @@ export const Dropdown = ({ theme, setTheme }: themeType) => {
           <span>Modo {theme === "light" ? "Escuro" : "Claro"}</span>
         </button>
         {auth && (
-          <button onClick={handleLogout}>
+          <button onClick={handleLogout} tabIndex={0}>
             <span>Sair</span>
           </button>
         )}

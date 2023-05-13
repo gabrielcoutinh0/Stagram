@@ -65,7 +65,7 @@
 }
 
 .menu button:focus-visible {
-  outline: 1px solid var(--separator);
+  outline: 2px solid var(--txt);
 }
 
 .dropdown.open .menu {
