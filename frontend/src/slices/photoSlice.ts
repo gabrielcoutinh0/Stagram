@@ -225,7 +225,9 @@ export const photoSlice = createSlice({
 
         state.photos.map((photo: IPhoto) => {
           if (photo._id === payload.photoId) {
-            return photo.likes?.push(payload.userId);
+            photo.likes?.includes(payload.userId)
+              ? pull(photo.likes as string[], payload.userId)
+              : photo.likes?.push(payload.userId);
           }
           return photo;
         });
