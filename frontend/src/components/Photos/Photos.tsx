@@ -18,6 +18,7 @@ import { resetMessage } from "../../slices/userSlice";
 import { IconContext } from "react-icons/lib";
 import { FaHeart, FaRegComment, FaRegHeart } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { ProfileImage } from "../ProfileImage/ProfileImage";
 
 interface IPhotoProps {
   photo: IPhoto;
@@ -63,11 +64,7 @@ export function Photos({ photo, allUsers }: IPhotoProps) {
               <header className={styles.headerPhoto}>
                 <Link to={`/${filteredUser?.username}`} tabIndex={0}>
                   <div className={styles.userPostPhoto}>
-                    <img
-                      key={filteredUser._id}
-                      src={`${uploads}/users/${filteredUser?.profileImage}`}
-                      alt={`Foto de ${filteredUser?.username}`}
-                    />
+                    <ProfileImage user={filteredUser} />
                   </div>
                 </Link>
                 <Link

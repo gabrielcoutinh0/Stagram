@@ -1,5 +1,5 @@
 import styles from "./Navbar.module.css";
-import { KeyboardEvent, MouseEvent, useEffect, useState } from "react";
+import { KeyboardEvent, MouseEvent, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import { VscDiffAdded } from "react-icons/vsc";
@@ -14,6 +14,7 @@ import { ModalAddPhoto } from "../ModalAddPhoto/ModalAddPhoto";
 import { Modal } from "../Modal/Modal";
 import { useDispatch } from "react-redux";
 import { getUserDetailsById, profile } from "../../slices/userSlice";
+import { ProfileImage } from "../ProfileImage/ProfileImage";
 
 export function Navbar({ theme, setTheme }: themeType) {
   const [params, setParams] = useSearchParams();
@@ -92,17 +93,7 @@ export function Navbar({ theme, setTheme }: themeType) {
                 <Link to={`/${user?.username}`}>
                   <div className={styles.tooltip}>
                     <div className={styles.perfil}>
-                      {user?.profileImage ? (
-                        <img
-                          src={`${uploads}/users/${user?.profileImage}`}
-                          alt={`Foto de ${user?.username}`}
-                        />
-                      ) : (
-                        <img
-                          src="./userWithoutPhoto.jpg"
-                          alt="Usuário sem foto"
-                        />
-                      )}
+                      <ProfileImage user={user} />
                     </div>
                     <span className={styles.tooltiptext}>Perfil</span>
                   </div>

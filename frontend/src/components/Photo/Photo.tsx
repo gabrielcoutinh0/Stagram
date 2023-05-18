@@ -21,6 +21,7 @@ import {
 import { FormEvent, KeyboardEvent, useEffect, useState } from "react";
 import { useResetMessage } from "../../hooks/useResetMessage";
 import { getAllUsers } from "../../slices/usersSlices";
+import { ProfileImage } from "../ProfileImage/ProfileImage";
 
 interface IPhotoProps {
   photo: IPhoto;
@@ -117,10 +118,7 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
         <header className={styles.headerPhoto}>
           <Link to={`/${user?.username}`} tabIndex={0}>
             <div className={styles.userPostPhoto}>
-              <img
-                src={`${uploads}/users/${user?.profileImage}`}
-                alt={`Foto de ${user?.username}`}
-              />
+              <ProfileImage user={user} />
             </div>
           </Link>
           <Link
@@ -226,10 +224,7 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
                           className={styles.imageUserComment}
                           tabIndex={0}
                         >
-                          <img
-                            src={`${uploads}/users/${filteredUser?.profileImage}`}
-                            alt={`Foto de ${filteredUser?.username}`}
-                          />
+                          <ProfileImage user={filteredUser} />
                         </Link>
                         <div className={styles.commentAndTime}>
                           <div className={styles.commentAndEdit}>
