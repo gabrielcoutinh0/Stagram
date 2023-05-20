@@ -1,7 +1,7 @@
 import styles from "./Photo.module.css";
 import { Link, useSearchParams } from "react-router-dom";
 import { uploads } from "../../utils/config";
-import { FaRegComment, FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaRegComment } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { BsPencilSquare, BsTrash } from "react-icons/bs";
 import { IconContext } from "react-icons/lib";
@@ -16,7 +16,6 @@ import {
   deletePhoto,
   getAllPhotos,
   getPhotoById,
-  likePhoto,
 } from "../../slices/photoSlice";
 import { FormEvent, KeyboardEvent, useEffect, useState } from "react";
 import { useResetMessage } from "../../hooks/useResetMessage";

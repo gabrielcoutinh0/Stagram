@@ -1,5 +1,5 @@
 import styles from "./Navbar.module.css";
-import { KeyboardEvent, MouseEvent, useEffect } from "react";
+import { KeyboardEvent, MouseEvent, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import { VscDiffAdded } from "react-icons/vsc";
@@ -9,21 +9,16 @@ import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { Dropdown } from "../Dropdown/Dropdown";
 import { themeType } from "../../utils/type";
-import { uploads } from "../../utils/config";
 import { ModalAddPhoto } from "../ModalAddPhoto/ModalAddPhoto";
 import { Modal } from "../Modal/Modal";
 import { useDispatch } from "react-redux";
-import { getUserDetailsById, profile } from "../../slices/userSlice";
 import { ProfileImage } from "../ProfileImage/ProfileImage";
 
 export function Navbar({ theme, setTheme }: themeType) {
-  const [params, setParams] = useSearchParams();
-
-  const { user: userLogged } = useSelector((state: RootState) => state.auth);
-  const { user } = useSelector((state: RootState) => state.user);
   const { auth } = useAuth();
+  const { user: userLogged } = useSelector((state: RootState) => state.auth);
 
-  const dispatch = useDispatch<AppDispatch>();
+  const [params, setParams] = useSearchParams();
 
   const handleModalAddPhoto = (
     e: MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement>
@@ -35,12 +30,6 @@ export function Navbar({ theme, setTheme }: themeType) {
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.code === "Enter" || e.code === "Space") handleModalAddPhoto(e);
   };
-
-  useEffect(() => {
-    if (userLogged) {
-      dispatch(getUserDetailsById(userLogged._id as string));
-    }
-  }, [userLogged]);
 
   return (
     <>
@@ -90,10 +79,10 @@ export function Navbar({ theme, setTheme }: themeType) {
                   <VscDiffAdded />
                   <span className={styles.tooltiptext}>Add Photo</span>
                 </div>
-                <Link to={`/${user?.username}`}>
+                <Link to={`/${userLogged?.username}`}>
                   <div className={styles.tooltip}>
                     <div className={styles.perfil}>
-                      <ProfileImage user={user} />
+                      <ProfileImage user={userLogged} />
                     </div>
                     <span className={styles.tooltiptext}>Perfil</span>
                   </div>
