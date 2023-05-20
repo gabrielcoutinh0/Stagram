@@ -19,6 +19,7 @@ import { IconContext } from "react-icons/lib";
 import { FaHeart, FaRegComment, FaRegHeart } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { ProfileImage } from "../ProfileImage/ProfileImage";
+import { Like } from "../Like/Like";
 
 interface IPhotoProps {
   photo: IPhoto;
@@ -30,8 +31,6 @@ interface IPhotoProps {
 export function Photos({ photo, allUsers }: IPhotoProps) {
   const dispatch = useDispatch<AppDispatch>();
   const [params, setParams] = useSearchParams();
-
-  const { user: userAuth } = useSelector((state: RootState) => state.auth);
 
   const handleModalPhoto = (
     e: MouseEvent<HTMLDivElement> | KeyboardEvent<HTMLDivElement>,
@@ -85,27 +84,7 @@ export function Photos({ photo, allUsers }: IPhotoProps) {
                 </div>
               </Link>
               <div className={styles.likesAndComments}>
-                <div
-                  className={styles.likes}
-                  onKeyDown={(e) => handleKeyDownLike(e, photo as IPhoto)}
-                  onClick={() => handleLike(photo as IPhoto)}
-                  role="button"
-                  tabIndex={0}
-                  aria-expanded="true"
-                >
-                  {photo.likes && photo.likes?.includes(userAuth!._id!) ? (
-                    <IconContext.Provider value={{ color: "red", size: "24" }}>
-                      <FaHeart />
-                    </IconContext.Provider>
-                  ) : (
-                    <IconContext.Provider
-                      value={{ className: `${styles.icons}`, size: "24" }}
-                    >
-                      <FaRegHeart />
-                    </IconContext.Provider>
-                  )}
-                  <span>{photo.likes?.length}</span>
-                </div>
+                <Like photo={photo} />
                 <div className={styles.comments}>
                   <IconContext.Provider
                     value={{ className: `${styles.icons}`, size: "24" }}

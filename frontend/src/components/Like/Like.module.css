@@ -1,0 +1,16 @@
+.likes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 8px;
+}
+
+.likes {
+  cursor: pointer;
+}
+
+.qntLike {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

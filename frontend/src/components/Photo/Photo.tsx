@@ -22,6 +22,7 @@ import { FormEvent, KeyboardEvent, useEffect, useState } from "react";
 import { useResetMessage } from "../../hooks/useResetMessage";
 import { getAllUsers } from "../../slices/usersSlices";
 import { ProfileImage } from "../ProfileImage/ProfileImage";
+import { Like } from "../Like/Like";
 
 interface IPhotoProps {
   photo: IPhoto;
@@ -53,18 +54,6 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
     id: string
   ) => {
     if (e.key === "Enter" || e.code === "Space") handleDelete(id);
-  };
-
-  const handleLike = (photo: IPhoto) => {
-    dispatch(likePhoto(photo._id as string));
-    resetMessage();
-  };
-
-  const handleKeyDownLike = (
-    e: KeyboardEvent<HTMLDivElement>,
-    photo: IPhoto
-  ) => {
-    if (e.key === "Enter" || e.code === "Space") handleLike(photo);
   };
 
   const handleDeleteComment = (photo: IPhoto, comment: IComment) => {
@@ -138,27 +127,7 @@ export function Photo({ photo, user, comments }: IPhotoProps) {
         </div>
         <div className={styles.iconsPhoto}>
           <div className={styles.likesAndComments}>
-            <div
-              className={styles.likes}
-              onKeyDown={(e) => handleKeyDownLike(e, photo as IPhoto)}
-              onClick={() => handleLike(photo as IPhoto)}
-              role="button"
-              tabIndex={0}
-              aria-expanded="true"
-            >
-              {photo.likes && photo.likes?.includes(userAuth!._id!) ? (
-                <IconContext.Provider value={{ color: "red", size: "24" }}>
-                  <FaHeart />
-                </IconContext.Provider>
-              ) : (
-                <IconContext.Provider
-                  value={{ className: `${styles.icons}`, size: "24" }}
-                >
-                  <FaRegHeart />
-                </IconContext.Provider>
-              )}
-              <span>{photo.likes?.length}</span>
-            </div>
+            <Like photo={photo} />
             <div className={styles.comments}>
               <IconContext.Provider
                 value={{ className: `${styles.icons}`, size: "24" }}
