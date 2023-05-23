@@ -4,15 +4,15 @@
 
 <div>
   <h1 align="center">
-      ### Login
+      <h3>Login</h3>
       <img alt="Preview Login" title="Preview Login" src=".github/login.png" width="600" />
-      ### Registro
+      <h3>Registro</h3>
       <img alt="Preview Register" title="Preview Register" src=".github/register.png" width="600" />
-      ### Página Inicial
+      <h3>Página Inicial</h3>
       <img alt="Preview Homepage" title="Preview Homepage" src=".github/homepage.png" width="600" />
-      ### Visualizar foto postada
+      <h3>Visualizar foto postada</h3>
       <img alt="Preview Photo Posted" title="Preview Photo Posted" src=".github/photoposted.png" width="600" />
-      ### Editar Perfil
+      <h3>Editar Perfil</h3>
       <img alt="Preview Edit Perfil" title="Preview Edit Perfil" src=".github/editperfil.png" width="600" />
   </h1>
 </div>
