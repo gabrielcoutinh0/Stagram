@@ -2,8 +2,7 @@
   <img alt="Stagram" src=".github/logo.png">
 </p>
 
-<div>
-  <h1 align="center">
+<div align="center">
       <h3>Login</h3>
       <img alt="Preview Login" title="Preview Login" src=".github/login.png" width="600" />
       <h3>Registro</h3>
@@ -14,7 +13,6 @@
       <img alt="Preview Photo Posted" title="Preview Photo Posted" src=".github/photoposted.png" width="600" />
       <h3>Editar Perfil</h3>
       <img alt="Preview Edit Perfil" title="Preview Edit Perfil" src=".github/editperfil.png" width="600" />
-  </h1>
 </div>
 
 <br>
