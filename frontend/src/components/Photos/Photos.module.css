@@ -1,4 +1,6 @@
 .articlePhotos {
+  max-width: 468px;
+  width: 100%;
   border-bottom: 1px solid var(--separator);
   padding: 32px 0;
 }
